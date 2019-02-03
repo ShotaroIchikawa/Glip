@@ -1,0 +1,32 @@
+{
+  "name": "Glip",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "firebase": "^5.8.2",
+    "react": "^16.7.0",
+    "react-native": "0.58.3",
+    "react-native-elements": "^1.0.0",
+    "react-native-gesture-handler": "^1.0.15",
+    "react-native-maps": "^0.23.0",
+    "react-native-modalbox": "^1.7.1",
+    "react-native-share-extension": "^1.2.1",
+    "react-native-vector-icons": "^6.2.0",
+    "react-native-webview": "^5.0.1",
+    "react-navigation": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "24.0.0",
+    "jest": "24.0.0",
+    "metro-react-native-babel-preset": "0.51.1",
+    "react-test-renderer": "16.6.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
