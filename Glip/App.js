@@ -8,13 +8,14 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Linking, AppRegistry} from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
 import firebase from 'firebase';
 import HomeTabNavigator from './navigation/HomeTabNavigator';
+import Share from "./Share";
 
 
-
+AppRegistry.registerComponent('MyShareEx',()=>Share);
 
 //
 // const instructions = Platform.select({
@@ -31,7 +32,27 @@ export default class App extends React.Component {
     super(props);
   }
 
+  componentDidMount () {
+    if (Platform.OS === 'android') {
+      // androidはこのタイミングで起動されたURLを取得できる
+      Linking.getInitialURL()
+          .then(url => {
+            if (url) {
+              this.openFromUrlScheme(url)
+            }
+          })
+          .catch(e => {
+            console.log(e)
+          })
+    } else if (Platform.OS === 'ios') {
+      // iosの場合はハンドラを経由する必要があるので追加
+      Linking.addEventListener('url', this.handleOpenURL)
+    }
+  }
+
   componentWillMount(){
+
+    Linking.removeEventListener('url', this.handleOpenURL);
     firebase.initializeApp({
       apiKey: "AIzaSyB2Owpp6Wc8ZZT_z3AcWnglFG7-H8Clbyo",
       authDomain: "gourmetclip-fishers.firebaseapp.com",
@@ -43,12 +64,35 @@ export default class App extends React.Component {
     })
   }
 
+  handleOpenURL = event => {
+    if (event.url) {
+      this.openFromUrlScheme(event.url)
+    }
+  }
+
+  //
+  openFromUrlScheme = url => {
+    console.log(url)
+    const parsedUrl = parse(url, true)
+    if (parsedUrl.protocol === 'myapp:') {
+      // 任意の画面を開く処理
+      // この例はreact-native-router-fluxでdebugMenuシーンを開くためのコード
+      this.props.navigation.navigate('TestHome');
+    }
+  }
+
+
+
   render() {
     return (
       <AppNavigator/>
 
     );
   }
+
+
+
+
 }
 
 

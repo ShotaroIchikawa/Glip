@@ -10,7 +10,7 @@
 		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		dZq+bN3QMZm5LbtklhtMc/9nO68=
+		09xT+UbHLF2e0e6SK1YZn/ANZh0=
 		</data>
 		<key>Entypo.ttf</key>
 		<data>
@@ -785,7 +785,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		edqcFJ0+EX9hfPkmrE7xSaOwz+w=
+		S3QYG6TKbpyosjkUAlwGiZGYLjM=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -813,11 +813,11 @@
 		</data>
 		<key>PlugIns/GlipTests.xctest.dSYM/Contents/Resources/DWARF/GlipTests</key>
 		<data>
-		5XXtj6yeyjtnEd4YqGYr7Bj2Tn0=
+		wIFcpQDgvtHAPWQTTUxKlFumHYA=
 		</data>
 		<key>PlugIns/GlipTests.xctest/GlipTests</key>
 		<data>
-		D585doRyBxSwP8SWV/W6lbpzxAs=
+		yi6XHOtMPjoN+a091xxOMvEuH9U=
 		</data>
 		<key>PlugIns/GlipTests.xctest/Info.plist</key>
 		<data>
@@ -840,7 +840,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FAQxC7/bFFAXrhrRtUfpaC2rMi4=
+			8s8yBQzBAFbH3LIHOtksyzd1jZ4=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -849,22 +849,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WLfZtftnDApPAt5IULvNcfqUHnw=
+			2SZrf48IgDras954QuG7NAPrfU4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
 		<key>PlugIns/MyShareEx.appex/Info.plist</key>
 		<data>
-		NTOhHDA8TeIRxbBSCAQKyp62PFs=
+		ZBsVGQWgx0gjVkZkcxPKha4VAKM=
 		</data>
 		<key>PlugIns/MyShareEx.appex/MyShareEx</key>
 		<data>
-		9A6A8bCezVZ/EFVOuRe3ticSLF4=
+		UaVtZAVaqB/mTVMU49LD9qfIKoI=
 		</data>
 		<key>PlugIns/MyShareEx.appex/_CodeSignature/CodeResources</key>
 		<data>
-		54+XhMxIqjKHhbWCAsgl/sTF7dE=
+		I2LXgbcbNl4uD0vH1pQ2QKvh5Lw=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
@@ -892,11 +892,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dZq+bN3QMZm5LbtklhtMc/9nO68=
+			09xT+UbHLF2e0e6SK1YZn/ANZh0=
 			</data>
 			<key>hash2</key>
 			<data>
-			lFmgQ18ejYTbch9dkiUtek2+uIWyh3YjtYN4tZReLyQ=
+			tc3upyFz5ReaHoZoqOpldHnHIR5wSDfk5CPjduUQ608=
 			</data>
 		</dict>
 		<key>Entypo.ttf</key>
@@ -2526,22 +2526,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5XXtj6yeyjtnEd4YqGYr7Bj2Tn0=
+			wIFcpQDgvtHAPWQTTUxKlFumHYA=
 			</data>
 			<key>hash2</key>
 			<data>
-			mWL2dbhRLIQlmZv7Tw/Fdl/bGuasawtTaQTVahgLgIc=
+			USupFm299uFONxC34vZHku+TgqbFHugVppSd/2RKLY4=
 			</data>
 		</dict>
 		<key>PlugIns/GlipTests.xctest/GlipTests</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			D585doRyBxSwP8SWV/W6lbpzxAs=
+			yi6XHOtMPjoN+a091xxOMvEuH9U=
 			</data>
 			<key>hash2</key>
 			<data>
-			L6/WeKK1d2mi66v+r06qrSSUj7Bj8rdQNyW5hNtCgmo=
+			kwuLUq5uqwU83U/kNpDJiwSBWJR53nnwe1k4FAjQoCw=
 			</data>
 		</dict>
 		<key>PlugIns/GlipTests.xctest/Info.plist</key>
@@ -2583,11 +2583,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FAQxC7/bFFAXrhrRtUfpaC2rMi4=
+			8s8yBQzBAFbH3LIHOtksyzd1jZ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			qkwcOGnaDJoYBv34lWz5zgrXN0ASjoLJtd8Qkt4gEME=
+			s1Pmko8h19rkpk8VzSBXYWN610R1lV2FQ7+jB++lx9o=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -2596,11 +2596,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WLfZtftnDApPAt5IULvNcfqUHnw=
+			2SZrf48IgDras954QuG7NAPrfU4=
 			</data>
 			<key>hash2</key>
 			<data>
-			uW+SmfWEbxBqtkttjYgfYMIrihv018Id+Xe7BGEh0Ks=
+			SL9Dpvz0CRUP2g+gHbGKT4PS+fW3fvsEMxn1njNMbnY=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -2609,33 +2609,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NTOhHDA8TeIRxbBSCAQKyp62PFs=
+			ZBsVGQWgx0gjVkZkcxPKha4VAKM=
 			</data>
 			<key>hash2</key>
 			<data>
-			K/sQD3FWAF7kCP08qIcVinxCaqaZSdPrdo267B9bGEE=
+			9GigzC3QqWK7u85qR23uHROJo/AYfiEh6NMeClJopUc=
 			</data>
 		</dict>
 		<key>PlugIns/MyShareEx.appex/MyShareEx</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9A6A8bCezVZ/EFVOuRe3ticSLF4=
+			UaVtZAVaqB/mTVMU49LD9qfIKoI=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ey4zy42kM7wIyGdRk7COy7G0FFWCJRatgGXTGkIkVnc=
+			seV8601CDUW7V9lup8UXMR+4RPS4zHOuGRdc12cRQ4Q=
 			</data>
 		</dict>
 		<key>PlugIns/MyShareEx.appex/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			54+XhMxIqjKHhbWCAsgl/sTF7dE=
+			I2LXgbcbNl4uD0vH1pQ2QKvh5Lw=
 			</data>
 			<key>hash2</key>
 			<data>
-			85efd3DhGFtsE3g0WSfgL5RvyozY5NOqyn0kKv4M9bE=
+			wnHIyyBh6OizCtdO7R1QYyI+cT9dhTvA0Z9ZjdZ3oE4=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>21EDC193-24BC-4D14-B330-21003C401262</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>21EDC193-24BC-4D14-B330-21003C401262.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>W</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Glip project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Glip</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>571395119.78979802</real>
+			<key>timeStoppedRecording</key>
+			<real>571395130.02742302</real>
+			<key>title</key>
+			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>21EDC193-24BC-4D14-B330-21003C401262</string>
+		</dict>
+		<key>C1654D23-A890-4148-A4DC-707D5CCB38B0</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>C1654D23-A890-4148-A4DC-707D5CCB38B0.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Glip project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Glip</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>571395834.35654294</real>
+			<key>timeStoppedRecording</key>
+			<real>571395837.48349595</real>
+			<key>title</key>
+			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>C1654D23-A890-4148-A4DC-707D5CCB38B0</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

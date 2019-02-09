@@ -6,7 +6,7 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>72907A14-205A-4E75-8476-01F7CD380595</key>
+		<key>04042F13-B404-4CD0-804C-6EB84D5FF35D</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,9 +15,9 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>72907A14-205A-4E75-8476-01F7CD380595.xcactivitylog</string>
+			<string>04042F13-B404-4CD0-804C-6EB84D5FF35D.xcactivitylog</string>
 			<key>highLevelStatus</key>
-			<string>E</string>
+			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
 			<string>Glip project</string>
 			<key>schemeIdentifier-schemeName</key>
@@ -27,15 +27,15 @@
 			<key>signature</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>570886843.16303504</real>
+			<real>571414720.34691405</real>
 			<key>timeStoppedRecording</key>
-			<real>570887081.650931</real>
+			<real>571414724.40079701</real>
 			<key>title</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>72907A14-205A-4E75-8476-01F7CD380595</string>
+			<string>04042F13-B404-4CD0-804C-6EB84D5FF35D</string>
 		</dict>
-		<key>CD57BD94-D42B-4AE8-8747-AF2DA79787A5</key>
+		<key>8D89568A-4424-4600-9CBA-5C3192C2B30E</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -44,9 +44,9 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>CD57BD94-D42B-4AE8-8747-AF2DA79787A5.xcactivitylog</string>
+			<string>8D89568A-4424-4600-9CBA-5C3192C2B30E.xcactivitylog</string>
 			<key>highLevelStatus</key>
-			<string>E</string>
+			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
 			<string>Glip project</string>
 			<key>schemeIdentifier-schemeName</key>
@@ -56,13 +56,13 @@
 			<key>signature</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>570885627.10881805</real>
+			<real>571416176.64915895</real>
 			<key>timeStoppedRecording</key>
-			<real>570885640.67580199</real>
+			<real>571416180.52301502</real>
 			<key>title</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>CD57BD94-D42B-4AE8-8747-AF2DA79787A5</string>
+			<string>8D89568A-4424-4600-9CBA-5C3192C2B30E</string>
 		</dict>
 	</dict>
 </dict>

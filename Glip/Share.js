@@ -1,11 +1,7 @@
-/**
- * Sample React Native Share Extension
- * @flow
- */
-
 import React, { Component } from 'react'
 import Modal from 'react-native-modalbox'
 import ShareExtension from 'react-native-share-extension'
+
 
 import {
     Text,
@@ -13,9 +9,9 @@ import {
     TouchableOpacity
 } from 'react-native'
 
-export default class Share extends React.Component {
-    constructor(props) {
-        super(props);
+export default class Share extends Component {
+    constructor(props, context) {
+        super(props, context)
         this.state = {
             isOpen: true,
             type: '',
@@ -23,17 +19,17 @@ export default class Share extends React.Component {
         }
     }
 
-    async componentDidMount() {
+     async componentDidMount() {
         try {
-            const { type, value } = await ShareExtension.data();
-            ShareExtension.openURL('glip://');
+
+
+            const { type, value } = await ShareExtension.data()
             this.setState({
-                type:type,
-                value:value
-            });
-            Alert.alert("aaa");
+                type,
+                value
+            })
         } catch(e) {
-            Alert.alert('errrr', e)
+            console.log('errrr', e)
         }
     }
 
@@ -43,7 +39,7 @@ export default class Share extends React.Component {
 
     render() {
         return (
-            <Modal
+           <Modal
                 backdrop={false}
                 style={{ backgroundColor: 'transparent' }}
                 position="center"

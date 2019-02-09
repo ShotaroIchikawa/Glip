@@ -21,5 +21,5 @@ dependencies: \
   /Users/share/Documents/GitHub/Glip/Glip/Glip/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
   /Users/share/Documents/GitHub/Glip/Glip/Glip/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
   /Users/share/Documents/GitHub/Glip/Glip/Glip/node_modules/react-native/React/DevSupport/RCTPackagerClient.h \
-  /Users/share/Documents/GitHub/Glip/Glip/Glip/node_modules/react-native/Libraries/WebSocket/RCTReconnectingWebSocket.h \
-  /Users/share/Documents/GitHub/Glip/Glip/Glip/node_modules/react-native/Libraries/WebSocket/RCTSRWebSocket.h
+  /Users/share/Documents/GitHub/Glip/Glip/Glip/node_modules/react-native/React/../Libraries/WebSocket/RCTReconnectingWebSocket.h \
+  /Users/share/Documents/GitHub/Glip/Glip/Glip/node_modules/react-native/React/../Libraries/WebSocket/RCTSRWebSocket.h

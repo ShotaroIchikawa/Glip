@@ -8,5 +8,6 @@ import App from './App';
 import {name as appName} from './app.json';
 import Share from './Share';
 
-AppRegistry.registerComponent(appName, () => App);
 AppRegistry.registerComponent('MyShareEx',()=>Share);
+AppRegistry.registerComponent(appName, () => App);
+
