@@ -28,27 +28,29 @@ AppRegistry.registerComponent('MyShareEx',()=>Share);
 // type Props = {};
 export default class App extends React.Component {
 
+
+
   constructor(props){
     super(props);
   }
 
-  componentDidMount () {
-    if (Platform.OS === 'android') {
-      // androidはこのタイミングで起動されたURLを取得できる
-      Linking.getInitialURL()
-          .then(url => {
-            if (url) {
-              this.openFromUrlScheme(url)
-            }
-          })
-          .catch(e => {
-            console.log(e)
-          })
-    } else if (Platform.OS === 'ios') {
-      // iosの場合はハンドラを経由する必要があるので追加
-      Linking.addEventListener('url', this.handleOpenURL)
-    }
-  }
+  // componentDidMount () {
+  //   if (Platform.OS === 'android') {
+  //     // androidはこのタイミングで起動されたURLを取得できる
+  //     Linking.getInitialURL()
+  //         .then(url => {
+  //           if (url) {
+  //             this.openFromUrlScheme(url)
+  //           }
+  //         })
+  //         .catch(e => {
+  //           console.log(e)
+  //         })
+  //   } else if (Platform.OS === 'ios') {
+  //     // iosの場合はハンドラを経由する必要があるので追加
+  //     Linking.addEventListener('url', this.handleOpenURL)
+  //   }
+  // }
 
   componentWillMount(){
 
@@ -64,22 +66,22 @@ export default class App extends React.Component {
     })
   }
 
-  handleOpenURL = event => {
-    if (event.url) {
-      this.openFromUrlScheme(event.url)
-    }
-  }
+  // handleOpenURL = event => {
+  //   if (event.url) {
+  //     this.openFromUrlScheme(event.url)
+  //   }
+  // }
 
   //
-  openFromUrlScheme = url => {
-    console.log(url)
-    const parsedUrl = parse(url, true)
-    if (parsedUrl.protocol === 'myapp:') {
-      // 任意の画面を開く処理
-      // この例はreact-native-router-fluxでdebugMenuシーンを開くためのコード
-      this.props.navigation.navigate('TestHome');
-    }
-  }
+  // openFromUrlScheme = url => {
+  //   console.log(url)
+  //   const parsedUrl = parse(url, true)
+  //   if (parsedUrl.protocol === 'myapp:') {
+  //     // 任意の画面を開く処理
+  //     // この例はreact-native-router-fluxでdebugMenuシーンを開くためのコード
+  //     this.props.navigation.navigate('TestHome');
+  //   }
+  // }
 
 
 
