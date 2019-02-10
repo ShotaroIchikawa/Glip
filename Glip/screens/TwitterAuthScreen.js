@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Linking,Alert,Button,WebView,AsyncStorage} from 'react-native';
 import firebase from 'firebase';
 import 'firebase/firestore';
+import SharedGroupPreferences from 'react-native-shared-group-preferences'
+
+
+const appGroupIdentifier ="group.com.glip"
 
 export default class TwitterAuthScreen extends React.Component {
 
@@ -9,6 +13,7 @@ export default class TwitterAuthScreen extends React.Component {
 
     };
 
+    //Using Async Storage(Old)
     storeUserId = async (userId) => {
 
         try{
@@ -26,6 +31,30 @@ export default class TwitterAuthScreen extends React.Component {
             test:"for linking test",
 
 
+        }
+
+       // this.saveUserDataToSharedStorage();
+    }
+
+    saveUserDataToSharedStorage=async(data)=> {
+        try {
+            await SharedGroupPreferences.setItem("userId", data, appGroupIdentifier);
+            //this.loadUsernameFromSharedStorage();
+
+        } catch(errorCode) {
+            // errorCode 0 = There is no suite with that name
+            Alert.alert(errorCode);
+        }
+    }
+
+    loadUsernameFromSharedStorage=async()=> {
+        try {
+            const loadedData = await SharedGroupPreferences.getItem("userId", appGroupIdentifier)
+            Alert.alert(loadedData);
+        } catch(errorCode) {
+            // errorCode 0 = no group name exists. You probably need to setup your Xcode Project properly.
+            // errorCode 1 = there is no value for that key
+            Alert.alert(errorCode);
         }
     }
 
@@ -104,7 +133,9 @@ export default class TwitterAuthScreen extends React.Component {
                 .then(data=>{
 
                     //Alert.alert("finished: "+data.user.uid);
-                    this.storeUserId(data.user.uid);
+                    //this.storeUserId(data.user.uid);
+
+                    this.saveUserDataToSharedStorage(data.user.uid);
                    this.createTwitterAccounts(data.user.uid,token,secret,user_id,screen_name);
 
                 })

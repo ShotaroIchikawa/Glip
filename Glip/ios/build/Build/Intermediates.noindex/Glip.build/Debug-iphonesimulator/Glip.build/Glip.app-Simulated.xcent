@@ -4,9 +4,9 @@
 <dict>
 	<key>application-identifier</key>
 	<string>AB98HQGVQ8.org.reactjs.native.example.Glip</string>
-	<key>keychain-access-groups</key>
+	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>AB98HQGVQ8.org.reactjs.native.example.Glip</string>
+		<string>group.com.glip</string>
 	</array>
 </dict>
 </plist>

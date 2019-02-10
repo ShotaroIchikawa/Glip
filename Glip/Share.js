@@ -4,23 +4,40 @@ import ShareExtension from 'react-native-share-extension'
 import firebase from "firebase"
 import {AsyncStorage,StyleSheet,Alert} from "react-native"
 import {Card,Button} from 'react-native-elements'
-
-
+import SharedGroupPreferences from 'react-native-shared-group-preferences'
 import {
     Text,
     View,
     TouchableOpacity, Linking
 } from 'react-native'
 let userId = "";
+
+const appGroupIdentifier = "group.com.glip";
+
 export default class Share extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
             isOpen: true,
             type: '',
-            value: "https://bagelee.com/programming/react-native/react-native-layout/",
-            uid:"aaa",
+            value: "aa",
+            uid:'7lsbD8v8w7SbPQcAQkTqMoEwP5P2',
 
+        }
+
+    }
+
+
+
+
+    async loadUsernameFromSharedStorage() {
+        try {
+            const loadedData = await SharedGroupPreferences.getItem("userId", appGroupIdentifier)
+           this.setState({uid:loadedData})
+        } catch(errorCode) {
+            // errorCode 0 = no group name exists. You probably need to setup your Xcode Project properly.
+            // errorCode 1 = there is no value for that key
+            return errorCode;
         }
     }
 
@@ -44,7 +61,7 @@ export default class Share extends Component {
 
     componentWillMount(){
 
-        this.getUserId();
+        //this.getUserId();
 
 
         firebase.initializeApp({
@@ -58,18 +75,16 @@ export default class Share extends Component {
         })
     }
 
+
+
     async componentDidMount() {
         try {
-
 
             const { type, value } = await ShareExtension.data()
             this.setState({
                 type,
                 value
             })
-
-
-
 
         } catch(e) {
             console.log('errrr', e)
@@ -80,9 +95,11 @@ export default class Share extends Component {
 
     closing = () => this.setState({ isOpen: false });
 
-    onShare = () => {
+    onShare = async () => {
         //ここにURLを投げる処理周りを
-        this.setUnparsedTweet(this.state.value);
+       // const loadedData =await SharedGroupPreferences.getItem("userId", appGroupIdentifier)
+
+        this.setUnparsedTweet(this.state.uid,this.state.value);
 
 
     }
@@ -101,7 +118,7 @@ export default class Share extends Component {
                         title={'Share with Glip'}
                         containerStyle={{width:300,borderRadius: 10,borderColor:'#007AFF'}}
                     >
-                        <Text>userId:{this.state.uid}</Text>
+                        <Text>Share Link For Glip</Text>
                         <Text>Share URL: {this.state.value}</Text>
 
                         <View style ={{flexDirection:'row', justifyContent: 'space-between',}}>
@@ -124,15 +141,7 @@ export default class Share extends Component {
                         </View>
 
                     </Card>
-                   {/*<View style={{ borderColor: 'green', borderWidth: 1, backgroundColor: 'white', height: 200, width: 300 }}>*/}
-                        {/*<TouchableOpacity onPress={this.closing}>*/}
 
-                            {/*<Text>Close</Text>*/}
-                            {/*<Text>type: { this.state.type }</Text>*/}
-                            {/*<Text>value: { this.state.value }</Text>*/}
-
-                        {/*</TouchableOpacity>*/}
-                    {/*</View>*/}
                 </View>
             </Modal>
         );
@@ -140,8 +149,8 @@ export default class Share extends Component {
 
 
 
-     setUnparsedTweet(url){
-        const userId = this.state.uid;
+     setUnparsedTweet(uid,url){
+        const userId = uid;
         const unparsedRef = this.getTweetsCollection().doc();
         unparsedRef.set({
             "requestUid":userId,
