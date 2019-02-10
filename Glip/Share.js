@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Modal from 'react-native-modalbox'
 import ShareExtension from 'react-native-share-extension'
 import firebase from "firebase"
+import {AsyncStorage,StyleSheet,Alert} from "react-native"
+import {Card,Button} from 'react-native-elements'
 
 
 import {
@@ -9,20 +11,40 @@ import {
     View,
     TouchableOpacity, Linking
 } from 'react-native'
-const userId = "7lsbD8v8w7SbPQcAQkTqMoEwP5P2";
+let userId = "";
 export default class Share extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
             isOpen: true,
             type: '',
-            value: '',
-            uid:''
+            value: "https://bagelee.com/programming/react-native/react-native-layout/",
+            uid:"aaa",
 
         }
     }
 
+    getUserId = async () => {
+
+        try{
+            const value = await AsyncStorage.getItem('userId');
+            if(value !== null){
+                this.setState({uid:value});
+
+            }else{
+                this.setState({uid:"ValueIsNull"});
+            }
+        }catch(error){
+            console.log(error);
+            this.setState({uid:"CatchError"});
+    }
+
+    }
+
+
     componentWillMount(){
+
+        this.getUserId();
 
 
         firebase.initializeApp({
@@ -45,7 +67,10 @@ export default class Share extends Component {
                 type,
                 value
             })
-            this.setUnparsedTweet(value);
+
+
+
+
         } catch(e) {
             console.log('errrr', e)
         }
@@ -54,6 +79,13 @@ export default class Share extends Component {
     onClose = () => ShareExtension.close();
 
     closing = () => this.setState({ isOpen: false });
+
+    onShare = () => {
+        //ここにURLを投げる処理周りを
+        this.setUnparsedTweet(this.state.value);
+
+
+    }
 
     render() {
         return (
@@ -65,14 +97,42 @@ export default class Share extends Component {
                 onClosed={this.onClose}
             >
                 <View style={{ alignItems: 'center', justifyContent:'center', flex: 1 }}>
-                    <View style={{ borderColor: 'green', borderWidth: 1, backgroundColor: 'white', height: 200, width: 300 }}>
-                        <TouchableOpacity onPress={this.closing}>
+                    <Card
+                        title={'Share with Glip'}
+                        containerStyle={{width:300,borderRadius: 10,borderColor:'#007AFF'}}
+                    >
+                        <Text>userId:{this.state.uid}</Text>
+                        <Text>Share URL: {this.state.value}</Text>
 
-                            <Text>Close</Text>
-                            <Text>type: { this.state.type }</Text>
-                            <Text>value: { this.state.value }</Text>
-                        </TouchableOpacity>
-                    </View>
+                        <View style ={{flexDirection:'row', justifyContent: 'space-between',}}>
+                            <Button
+                                color = '#007AFF'
+                                backgroundColor="white"
+                                title='Cancel'
+                                style={styles.button}
+                                onPress ={this.closing}
+                            />
+
+                            <Button
+                                color = '#007AFF'
+                                backgroundColor="white"
+                                title='Share'
+                                style={styles.button}
+                                onPress={this.onShare}
+                            />
+
+                        </View>
+
+                    </Card>
+                   {/*<View style={{ borderColor: 'green', borderWidth: 1, backgroundColor: 'white', height: 200, width: 300 }}>*/}
+                        {/*<TouchableOpacity onPress={this.closing}>*/}
+
+                            {/*<Text>Close</Text>*/}
+                            {/*<Text>type: { this.state.type }</Text>*/}
+                            {/*<Text>value: { this.state.value }</Text>*/}
+
+                        {/*</TouchableOpacity>*/}
+                    {/*</View>*/}
                 </View>
             </Modal>
         );
@@ -80,12 +140,24 @@ export default class Share extends Component {
 
 
 
-    setUnparsedTweet(url){
+     setUnparsedTweet(url){
+        const userId = this.state.uid;
         const unparsedRef = this.getTweetsCollection().doc();
         unparsedRef.set({
             "requestUid":userId,
             "tweetUrl":url,
         });
+        this.closing();
+        //Alert.alert("successfully seneded", {text: 'OK', onPress: this.closing},);
+        //  Alert.alert(
+        //      'Success!',
+        //      'your url is correctly shared',
+        //      [
+        //
+        //          {text: 'OK', onPress: this.closing},
+        //      ],
+        //      { cancelable: false }
+        //  )
     }
 
     getUnparsedDoc(){
@@ -106,3 +178,17 @@ export default class Share extends Component {
     }
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        // alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button: {
+        width:100,
+
+
+    }
+});

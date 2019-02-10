@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Linking,Alert,Button,WebView} from 'react-native';
+import {Platform, StyleSheet, Text, View, Linking,Alert,Button,WebView,AsyncStorage} from 'react-native';
 import firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -8,6 +8,17 @@ export default class TwitterAuthScreen extends React.Component {
     static navigationOptions = {
 
     };
+
+    storeUserId = async (userId) => {
+
+        try{
+            await AsyncStorage.setItem('userId',userId);
+        }catch(error){
+            console.log(error);
+        }
+
+        Alert.alert(userId + ': stored');
+    }
 
     constructor(props){
         super(props);
@@ -93,6 +104,7 @@ export default class TwitterAuthScreen extends React.Component {
                 .then(data=>{
 
                     //Alert.alert("finished: "+data.user.uid);
+                    this.storeUserId(data.user.uid);
                    this.createTwitterAccounts(data.user.uid,token,secret,user_id,screen_name);
 
                 })
