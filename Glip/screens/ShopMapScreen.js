@@ -107,7 +107,7 @@ export default class ShopMapScreen extends React.Component {
                 />
 
                 <MapView
-                    provider={PROVIDER_DEFAULT}
+                    provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     initialRegion={this.state.region}
                 />
