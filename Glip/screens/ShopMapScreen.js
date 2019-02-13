@@ -138,34 +138,39 @@ export default class ShopMapScreen extends React.Component {
 
     };
 
-    getUserShopGroup=async()=>{
-        if(this.uid!==""){
-            var userRef = firebase.firestore().collection('users').doc(this.uid);
-            var getDoc = await userRef.collection('shops').get()
-                .then(snapshot=>{
+    getUserShopGroup(){
 
-                    const messages = snapshot.docs.map((doc) => {
-                        Alert.alert(doc.id)
-                        //console.warn(JSON.stringify(doc.data()));
-                        //let ref = doc.data().shop_ref.split("/");
-                        //var shopRef = firebase.firestore().collection('shops').doc(ref[1]);
-                        //doc(doc.data().shop_ref);
-                        // shopRef.get()
-                        //     .then(doc=>{
-                        //         Alert.alert(doc.data().name)
-                        //         return doc.data();
-                        //         //Alert.alert(doc.data().name);
-                        //     })
-                        //return doc.data();
-                    });
+            const userRef = firebase.firestore().collection('users').doc(this.uid);
+            //const getDoc =
+                userRef.collection('shops').onSnapshot(this.getData);
+          //  get()
+          //        .then(snapshot=>{
+          //
+          //
+          //           var messages = snapshot.docs.map((doc) => {
+          //               console.warn(doc.id);
+          //               return doc.data().doc_ref;
+          //
+          //           });
+
+                     for( var i=0; i<this.state.messages.length; i++) {
+
+                         const str =  `name: ${this.state.messages[i].doc_ref}`;
+
+                         console.warn( str );
+
+                     }
+                    // this.setState({message:messages})
                     // messagesをstateに渡す
 
-                    this.setState({ messages: messages });
-
-                });
+                // });
 
 
-        }
+
+
+
+
+
 
 
 
