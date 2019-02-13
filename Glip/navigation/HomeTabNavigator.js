@@ -1,70 +1,154 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { Feather } from 'react-native-vector-icons/Feather';
+import { Icon } from 'react-native-elements';
 
 import ShopMapScreen from "../screens/ShopMapScreen";
 import ShopListScreen from "../screens/ShopListScreen";
 import TestHomeScreen from "../screens/TestHomeScreen";
 import TwitterAuthScreen from "../screens/TwitterAuthScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
-const ListStack = createStackNavigator({
-    List: {screen: ShopListScreen},
-});
+const SignUpStack = createStackNavigator(
+    {
+        SignUp: {screen: SignUpScreen},
+        TwitterSignUp:{screen:TwitterAuthScreen},
+        Home: {
+            screen: createBottomTabNavigator(
+                {
+                    List:{
+                        screen: createStackNavigator(
+                            {
+                                List: {screen: ShopListScreen},
+                            },
+                        ),
+                        navigationOptions: ({ }) => ({
+                            tabBarLabel: 'リスト',
+                            tabBarIcon:({tintColor}) => (<Icon name='list' type='feather' size={30} color={tintColor}/>)
 
-const MapStack = createStackNavigator({
-    Map: {screen: ShopMapScreen},
-});
+                        })
+                    },
+                    Map:{
+                        screen: createStackNavigator({
+                            Map: {screen: ShopMapScreen},
+                        }),
+                        navigationOptions: ({ }) => ({
+                            tabBarLabel: 'マップ',
 
-const DebugStack = createStackNavigator(
-    {
-        TestHome: {
-            screen: TestHomeScreen,
-        },
-        TwitterAuth:{
-            screen: TwitterAuthScreen,
-        },
-    },
-    {
-        initialRouteName: 'TestHome',
-    });
+                            tabBarIcon:({tintColor}) => (<Icon name='map-pin' type='feather' size={30} color={tintColor}/>)
+                        })
+                    },
+                    Debug:{
+                        screen: createStackNavigator(
+                            {
+                                TestHome: {
+                                    screen: TestHomeScreen,
+                                },
 
-const TabNavigator = createBottomTabNavigator(
-    {
-        List:{
-            screen: ListStack,
-            navigationOptions:{
-                tabBarLabel: 'List',
-                TabBarIcon: ()=> (
-                    <Feather name={"list"} size={20}/>
-                )
-            }
-        },
-        Map:{
-            screen: MapStack,
-            navigationOptions:{
-                TabBarIcon: ()=> (
-                    <Feather name={"map-pin"} size={20}/>
-                )
-            }
-        },
-        Debug:{
-            screen: DebugStack,
-            navigationOptions:{
-                TabBarIcon: ()=> (
-                    <Feather name={"user"} size={20}/>
-                )
-            }
-        },
-    },
-    {
-        tabBarOptions: {
-            activeTintColor: '#fea031',
-            inactiveTintColor: 'gray',
-            activeBackgroundColor: '#fff',
-            inactiveBackgroundColor: '#fff',
+                                TwitterAuth:{
+                                    screen: TwitterAuthScreen,
+                                },
+                            },
+                            {
+                                initialRouteName: 'TestHome',
+                            }
+                        ),
+                        navigationOptions: ({ }) => ({
+                            tabBarLabel: 'デバック',
+                            tabBarIcon:({tintColor}) => (<Icon name='user' type='feather' size={30} color={tintColor}/>)
+                        })
+                    },
+                },
+                {
+                    tabBarOptions: {
+                        activeTintColor: '#03A9F4',
+                        inactiveTintColor: 'gray',
+                        activeBackgroundColor: '#FFEB3B',
+                        inactiveBackgroundColor: '#FFEB3B',
+                        showIcon: true,
+                    }
+                }
+            )
         }
+    },
+    {
+        initialRouteName: 'SignUp',
+    },
+    {
+        headerMode: 'none',
+        header: null,
+        navigationOptions:{
+            headerVisible: false,
+         }
     }
 );
 
 
-export default createAppContainer(TabNavigator);
+
+
+
+export default createAppContainer(SignUpStack);
+
+
+// const ListStack = createStackNavigator({
+//     List: {screen: ShopListScreen},
+// });
+//
+// const MapStack = createStackNavigator({
+//     Map: {screen: ShopMapScreen},
+// });
+//
+// const DebugStack = createStackNavigator(
+//     {
+//         TestHome: {
+//             screen: TestHomeScreen,
+//         },
+//         TwitterAuth:{
+//             screen: TwitterAuthScreen,
+//         },
+//     },
+//     {
+//         initialRouteName: 'TestHome',
+//     });
+//
+// const TabNavigator = createBottomTabNavigator(
+//     {
+//         List:{
+//             screen: ListStack,
+//             navigationOptions:{
+//                 tabBarLabel: 'List',
+//                 TabBarIcon: ()=> (
+//                     <Feather name={"list"} size={20}/>
+//                 )
+//             }
+//         },
+//         Map:{
+//             screen: MapStack,
+//             navigationOptions:{
+//                 TabBarIcon: ()=> (
+//                     <Feather name={"map-pin"} size={20}/>
+//                 )
+//             }
+//         },
+//         Debug:{
+//             screen: DebugStack,
+//             navigationOptions:{
+//                 TabBarIcon: ()=> (
+//                     <Feather name={"user"} size={20}/>
+//                 )
+//             }
+//         },
+//     },
+//     {
+//         tabBarOptions: {
+//             activeTintColor: '#fea031',
+//             inactiveTintColor: 'gray',
+//             activeBackgroundColor: '#fff',
+//             inactiveBackgroundColor: '#fff',
+//         }
+//     }
+// );
+//
+//
+// export default createAppContainer(TabNavigator);

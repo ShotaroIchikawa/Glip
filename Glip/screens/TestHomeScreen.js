@@ -4,7 +4,7 @@ import {Platform, StyleSheet, Text, View,Button} from 'react-native';
 export default class TestHomeScreen extends React.Component {
 
     static navigationOptions = {
-
+        header: null,
     };
 
     constructor(props){

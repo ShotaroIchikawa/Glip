@@ -3,7 +3,12 @@ import {Platform, StyleSheet, Text, View, Linking,Alert,Button,WebView,AsyncStor
 import firebase from 'firebase';
 import 'firebase/firestore';
 import SharedGroupPreferences from 'react-native-shared-group-preferences'
+import {NavigationActions, StackActions} from "react-navigation";
 
+const goHome = StackActions.reset({
+    index:0,
+    actions:[NavigationActions.navigate({routeName:'Home'})],
+});
 
 const appGroupIdentifier ="group.com.glip"
 
@@ -202,7 +207,7 @@ export default class TwitterAuthScreen extends React.Component {
 
             }
         );
-        this.props.navigation.navigate('TestHome');
+        this.props.navigation.dispatch(goHome);
     }
 
     //This will  be used when user_id of firebase already known

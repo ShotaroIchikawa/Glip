@@ -817,7 +817,7 @@
 		</data>
 		<key>PlugIns/GlipTests.xctest/GlipTests</key>
 		<data>
-		yi6XHOtMPjoN+a091xxOMvEuH9U=
+		GCLROKG+AHF2fzO+UM/XmJbz5lQ=
 		</data>
 		<key>PlugIns/GlipTests.xctest/Info.plist</key>
 		<data>
@@ -860,7 +860,7 @@
 		</data>
 		<key>PlugIns/MyShareEx.appex/MyShareEx</key>
 		<data>
-		mbmIyvVRTKOlrTncHMoUOR1BD0k=
+		HmsxSwNIW34tu/yDfig0GtkqgUQ=
 		</data>
 		<key>PlugIns/MyShareEx.appex/_CodeSignature/CodeResources</key>
 		<data>
@@ -2537,11 +2537,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yi6XHOtMPjoN+a091xxOMvEuH9U=
+			GCLROKG+AHF2fzO+UM/XmJbz5lQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			kwuLUq5uqwU83U/kNpDJiwSBWJR53nnwe1k4FAjQoCw=
+			wDrkGurp4Yf09pUhq1RY1ORq60RVM9j1CQgkPYXydHY=
 			</data>
 		</dict>
 		<key>PlugIns/GlipTests.xctest/Info.plist</key>
@@ -2620,11 +2620,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mbmIyvVRTKOlrTncHMoUOR1BD0k=
+			HmsxSwNIW34tu/yDfig0GtkqgUQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			vJ5lYlVf5ML82kl5gJ/N8FldNBtQRA6YCx6Q9MZxsdg=
+			4EqBQf2UinV5ru7k+btTGD+WDkD+cKC+0eQM8omlF0c=
 			</data>
 		</dict>
 		<key>PlugIns/MyShareEx.appex/_CodeSignature/CodeResources</key>
