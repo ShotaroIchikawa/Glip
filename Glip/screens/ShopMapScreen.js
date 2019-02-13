@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Dimensions} from 'react-native';
+import {Platform, StyleSheet, Text, View,Dimensions,Alert,YellowBox} from 'react-native';
 import {
     Header,
     SearchBar,
     Button
 } from 'react-native-elements';
 import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT} from 'react-native-maps';
+import firebase from 'firebase'
+import "firebase/firestore";
 
 const {width, height} = Dimensions.get('window')
 
@@ -63,6 +65,8 @@ export default class ShopMapScreen extends React.Component {
             }
 
         )
+        this.getUserShopGroup()
+
 
 
     }
@@ -116,6 +120,112 @@ export default class ShopMapScreen extends React.Component {
 
         );
     }
+
+    getShops=()=>{
+        const shopRef = this.shops;
+        var array = {};
+
+        shopRef.
+        onSnapshot(this.getData);
+
+        for( var i=0; i<this.state.messages.length; i++) {
+
+            const str =  `name: ${this.state.messages[i].name}  URL: ${this.state.messages[i].website_url} _lat: ${this.state.messages[i].geopoint._lat}, _long: ${this.state.messages[i].geopoint._long}`;
+
+            console.log( str );
+
+        }
+
+    };
+
+    getUserShopGroup=async()=>{
+        if(this.uid!==""){
+            var userRef = firebase.firestore().collection('users').doc(this.uid);
+            var getDoc = await userRef.collection('shops').get()
+                .then(snapshot=>{
+
+                    const messages = snapshot.docs.map((doc) => {
+                        Alert.alert(doc.id)
+                        //console.warn(JSON.stringify(doc.data()));
+                        //let ref = doc.data().shop_ref.split("/");
+                        //var shopRef = firebase.firestore().collection('shops').doc(ref[1]);
+                        //doc(doc.data().shop_ref);
+                        // shopRef.get()
+                        //     .then(doc=>{
+                        //         Alert.alert(doc.data().name)
+                        //         return doc.data();
+                        //         //Alert.alert(doc.data().name);
+                        //     })
+                        //return doc.data();
+                    });
+                    // messagesをstateに渡す
+
+                    this.setState({ messages: messages });
+
+                });
+
+
+        }
+
+
+
+
+        var array = {};
+
+
+
+
+        // const observer = shopRef.
+        // onSnapshot(this.getData);
+        //
+        // for( var i=0; i<this.state.messages.length; i++) {
+        //
+        //     let documentRef = firestore.document(this.state.messages[i].shop_ref);
+        //     documentRef.onSnapshot((querySnapshot)=>{
+        //         const name = querySnapshot.docs.map((doc)=>{
+        //             return doc.data().name;
+        //         })
+        //     });
+        //     Alert.alert(name);
+        //     //const str =  `name: ${this.state.messages[i].name}  URL: ${this.state.messages[i].website_url} _lat: ${this.state.messages[i].geopoint._lat}, _long: ${this.state.messages[i].geopoint._long}`;
+        //
+        //     //console.log( str );
+        //
+        // }
+
+
+    };
+
+    //firestoreのデータを取得してきてdoc内のgeopointだけ返す（デバック出力用)
+    getData = (querySnapshot) => {
+        // docsのdataをmessagesとして取得
+        const messages = querySnapshot.docs.map((doc) => {
+            return doc.data();
+        });
+        // messagesをstateに渡す
+        this.setState({ messages: messages });
+    }
+
+
+
+
+    get shops(){
+        return firebase.firestore().collection("shops");
+    }
+
+    //ショートカット用の変数
+    get userCollection(){
+        return firebase.firestore().collection("users");
+    }
+
+    get uid(){
+        return (firebase.auth().currentUser||{}).uid;
+    }
+
+    get name(){
+        return (firebase.auth().currentUser||{}).displayName;
+    }
+
 }
 
 const styles = StyleSheet.create({

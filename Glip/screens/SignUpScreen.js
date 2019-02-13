@@ -34,8 +34,14 @@ export default class SignUpScreen extends React.Component {
     constructor(props){
         super(props);
         this.state = {email: '', pass: ''};
+
+
     }
 
+    componentDidMount(){
+
+
+    }
 
     render() {
         const {email, pass} = this.state;
@@ -96,6 +102,14 @@ export default class SignUpScreen extends React.Component {
 
 
         )
+    }
+
+    get uid(){
+        return (firebase.auth().currentUser||{}).uid;
+    }
+
+    get name(){
+        return (firebase.auth().currentUser||{}).displayName;
     }
 
 
