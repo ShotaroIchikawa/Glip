@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View,Dimensions} from 'react-native';
 import {
     Header,
     SearchBar,
@@ -7,6 +7,13 @@ import {
 } from 'react-native-elements';
 import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT} from 'react-native-maps';
 
+const {width, height} = Dimensions.get('window')
+
+const SCREEN_HEIGHT = height
+const SCREEN_WIDTH = width
+const ASPECT_RATIO = width / height
+const LATITUDE_DELTA = 0.1000
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 
 export default class ShopMapScreen extends React.Component {
@@ -18,7 +25,71 @@ export default class ShopMapScreen extends React.Component {
     constructor(props){
         super(props);
 
+        this.state = {
+            messages: [],
+            region: {
+                latitude: 38.261304,
+                longitude: 140.880196,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA
+            },
+            shopName:"",
+            locationResult:null,
+            currentLocation:{longitude:"",latitude:""}
+        };
+
     }
+
+    componentDidMount(){
+/////ユーザの現在地を取得してstate,regionへ
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                let lat = parseFloat(position.coords.latitude)
+                let long = parseFloat(position.coords.longitude)
+
+                let currentRegion = {
+                    latitude: lat,
+                    longitude: long,
+                    latitudeDelta: LATITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA
+                }
+                this.setState({region:currentRegion})
+            },
+            (error)    => { console.log(error) },
+            {
+                enableHighAccuracy: true,
+                timeout:            20000,
+                maximumAge:         10000
+            }
+
+        )
+
+
+    }
+
+    //state.messageの中にある緯度経度情報をMapviewMakerの塊として返す
+    renderLibraryMarkers(){
+        return this.state.messages.map((message,index)=>{
+            const coords = {
+                latitude: message.geopoint._lat,
+                longitude: message.geopoint._long,
+            };
+            const name = message.name;
+            const url = message.website_url;
+
+            return(
+                <MapView.Marker
+                    key = {index}
+                    coordinate = {coords}
+                    title={`title: ${name} `}
+                    description={`URL: ${url}`}
+                    onPress={() => { this.onPressMaker(name) }}
+                />
+            );
+        });
+    }
+
+
 
     render() {
         return (
@@ -38,12 +109,7 @@ export default class ShopMapScreen extends React.Component {
                 <MapView
                     provider={PROVIDER_DEFAULT}
                     style={styles.map}
-                    initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}
+                    initialRegion={this.state.region}
                 />
 
             </View>

@@ -6,7 +6,7 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>037DF6D1-C6B3-4757-A8FC-E28B910E4349</key>
+		<key>11359B9C-D00A-41AA-A66E-F675BCEDE9BD</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,36 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>037DF6D1-C6B3-4757-A8FC-E28B910E4349.xcactivitylog</string>
-			<key>highLevelStatus</key>
-			<string>S</string>
-			<key>schemeIdentifier-containerName</key>
-			<string>Glip project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Glip</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
-			<key>timeStartedRecording</key>
-			<real>571491971.58823895</real>
-			<key>timeStoppedRecording</key>
-			<real>571492008.87647295</real>
-			<key>title</key>
-			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
-			<key>uniqueIdentifier</key>
-			<string>037DF6D1-C6B3-4757-A8FC-E28B910E4349</string>
-		</dict>
-		<key>BD133554-E27F-47B0-B027-C7BB238DF6E9</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>BD133554-E27F-47B0-B027-C7BB238DF6E9.xcactivitylog</string>
+			<string>11359B9C-D00A-41AA-A66E-F675BCEDE9BD.xcactivitylog</string>
 			<key>highLevelStatus</key>
 			<string>W</string>
 			<key>schemeIdentifier-containerName</key>
@@ -56,13 +27,42 @@
 			<key>signature</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>571724781.40776503</real>
+			<real>571726501.96260595</real>
 			<key>timeStoppedRecording</key>
-			<real>571724816.03579903</real>
+			<real>571726560.63866901</real>
 			<key>title</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>BD133554-E27F-47B0-B027-C7BB238DF6E9</string>
+			<string>11359B9C-D00A-41AA-A66E-F675BCEDE9BD</string>
+		</dict>
+		<key>C43673B5-7DA8-4A48-AF70-4182BD4800DD</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>C43673B5-7DA8-4A48-AF70-4182BD4800DD.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Glip project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Glip</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>571728614.73046994</real>
+			<key>timeStoppedRecording</key>
+			<real>571728619.23849595</real>
+			<key>title</key>
+			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>C43673B5-7DA8-4A48-AF70-4182BD4800DD</string>
 		</dict>
 	</dict>
 </dict>
