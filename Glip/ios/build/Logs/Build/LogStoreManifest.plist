@@ -6,7 +6,7 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>3A4AE964-F6EC-4A99-9394-F97E4A048894</key>
+		<key>27BAA25A-EAD7-4E6A-B104-E9E0A2748D1E</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,9 +15,9 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>3A4AE964-F6EC-4A99-9394-F97E4A048894.xcactivitylog</string>
+			<string>27BAA25A-EAD7-4E6A-B104-E9E0A2748D1E.xcactivitylog</string>
 			<key>highLevelStatus</key>
-			<string>E</string>
+			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
 			<string>Glip project</string>
 			<key>schemeIdentifier-schemeName</key>
@@ -27,13 +27,13 @@
 			<key>signature</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>571733293.21532202</real>
+			<real>571836689.12567997</real>
 			<key>timeStoppedRecording</key>
-			<real>571733309.445737</real>
+			<real>571836695.22725904</real>
 			<key>title</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>3A4AE964-F6EC-4A99-9394-F97E4A048894</string>
+			<string>27BAA25A-EAD7-4E6A-B104-E9E0A2748D1E</string>
 		</dict>
 		<key>EDCDF997-23C8-4B12-8F57-C733906D7392</key>
 		<dict>

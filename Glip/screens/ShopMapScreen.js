@@ -5,7 +5,7 @@ import {
     SearchBar,
     Button
 } from 'react-native-elements';
-import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT} from 'react-native-maps';
+import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT,Marker} from 'react-native-maps';
 import firebase from 'firebase'
 import "firebase/firestore";
 
@@ -29,6 +29,7 @@ export default class ShopMapScreen extends React.Component {
 
         this.state = {
             messages: [],
+            shopRef:[],
             region: {
                 latitude: 38.261304,
                 longitude: 140.880196,
@@ -42,7 +43,10 @@ export default class ShopMapScreen extends React.Component {
 
     }
 
+
+
     componentDidMount(){
+
 /////ユーザの現在地を取得してstate,regionへ
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -55,6 +59,7 @@ export default class ShopMapScreen extends React.Component {
                     latitudeDelta: LATITUDE_DELTA,
                     longitudeDelta: LONGITUDE_DELTA
                 }
+                console.warn(lat,long)
                 this.setState({region:currentRegion})
             },
             (error)    => { console.log(error) },
@@ -68,30 +73,30 @@ export default class ShopMapScreen extends React.Component {
         this.getUserShopGroup()
 
 
-
+        //console.warn(this.state.messages)
     }
 
-    //state.messageの中にある緯度経度情報をMapviewMakerの塊として返す
-    renderLibraryMarkers(){
-        return this.state.messages.map((message,index)=>{
-            const coords = {
-                latitude: message.geopoint._lat,
-                longitude: message.geopoint._long,
-            };
-            const name = message.name;
-            const url = message.website_url;
-
-            return(
-                <MapView.Marker
-                    key = {index}
-                    coordinate = {coords}
-                    title={`title: ${name} `}
-                    description={`URL: ${url}`}
-                    onPress={() => { this.onPressMaker(name) }}
-                />
-            );
-        });
-    }
+    // //state.messageの中にある緯度経度情報をMapviewMakerの塊として返す
+    // renderLibraryMarkers(){
+    //     return this.state.messages.map((message,index)=>{
+    //         const coords = {
+    //             latitude: message.geopoint._lat,
+    //             longitude: message.geopoint._long,
+    //         };
+    //         const name = message.name;
+    //         const url = message.website_url;
+    //
+    //         return(
+    //             <MapView.Marker
+    //                 key = {index}
+    //                 coordinate = {coords}
+    //                 title={`title: ${name} `}
+    //                 description={`URL: ${url}`}
+    //                 onPress={() => { this.onPressMaker(name) }}
+    //             />
+    //         );
+    //     });
+    // }
 
 
 
@@ -114,7 +119,9 @@ export default class ShopMapScreen extends React.Component {
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     initialRegion={this.state.region}
-                />
+                >
+                    {this.renderLibraryMarkers()}
+                </MapView>
 
             </View>
 
@@ -138,11 +145,70 @@ export default class ShopMapScreen extends React.Component {
 
     };
 
+    renderLibraryMarkers(){
+        return this.state.messages.map((message)=>{
+            const coords = {
+                latitude: message.lat,
+                longitude: message.long,
+            };
+
+
+            return(
+                <Marker
+                    //key = {index}
+                    coordinate = {coords}
+                    title={"marker"}
+                    description={"description"}
+                   // onPress={() => { this.onPressMaker(name) }}
+                />
+            );
+        });
+    }
+
+
     getUserShopGroup(){
 
             const userRef = firebase.firestore().collection('users').doc(this.uid);
             //const getDoc =
-                userRef.collection('shops').onSnapshot(this.getData);
+                userRef.collection('shops').onSnapshot((querySnapshot)=>{
+                    const data=[];
+                    querySnapshot.forEach((doc)=>{
+                        data.push({
+                            ref: doc.data().shop_ref
+                        });
+                    });
+
+                  //console.warn(data.length)
+                    // for(let i=0;i<data.length;i++) {
+                    let geopoint=[];
+                    for(let i=0;i<data.length;i++) {
+
+
+                        let ref = data[i].ref;
+                         ref.get().then((doc)=>{
+                             //console.warn(doc.data().geopoint._lat);
+                             //console.warn(doc.data().geopoint._long);
+                            //let data = this.state.messages;
+                             geopoint.push({
+                                 lat:doc.data().geopoint._lat,
+                                 long:doc.data().geopoint._long
+                             })
+                             console.warn(this.state.messages)
+                             this.setState({messages:geopoint})
+                            // console.warn(this.state.messages)
+                        })
+                    }
+
+                    this.setState({messages:geopoint})
+
+                    // for(let i=0;i<geopoint.length;i++) {
+                    //     console.warn(geopoint[i]._lat)
+                    // }
+
+                });
+
+
+
           //  get()
           //        .then(snapshot=>{
           //
@@ -153,13 +219,7 @@ export default class ShopMapScreen extends React.Component {
           //
           //           });
 
-                     for( var i=0; i<this.state.messages.length; i++) {
 
-                         const str =  `name: ${this.state.messages[i].doc_ref}`;
-
-                         console.warn( str );
-
-                     }
                     // this.setState({message:messages})
                     // messagesをstateに渡す
 
