@@ -153,8 +153,8 @@ export default class Share extends Component {
         const userId = uid;
         const unparsedRef = this.getTweetsCollection().doc();
         unparsedRef.set({
-            "requestUid":userId,
-            "tweetUrl":url,
+            "post_url":userId,
+            "request_uid":url,
         });
         this.closing();
         //Alert.alert("successfully seneded", {text: 'OK', onPress: this.closing},);
