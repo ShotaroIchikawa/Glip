@@ -43,29 +43,29 @@ const SignUpStack = createStackNavigator(
                             tabBarIcon:({tintColor}) => (<Icon name='map-pin' type='feather' size={30} color={tintColor}/>)
                         })
                     },
-                    Debug:{
-                        screen: createStackNavigator(
-                            {
-                                BasicInfo:{
-                                    screen:BasicInfoScreen
-                                },
-                                TestHome: {
-                                    screen: TestHomeScreen,
-                                },
-
-                                TwitterAuth:{
-                                    screen: TwitterAuthScreen,
-                                },
-                            },
-                            {
-                                initialRouteName: 'BasicInfo',
-                            }
-                        ),
-                        navigationOptions: ({ }) => ({
-                            tabBarLabel: 'デバック',
-                            tabBarIcon:({tintColor}) => (<Icon name='user' type='feather' size={30} color={tintColor}/>)
-                        })
-                    },
+                   // Debug:{
+                   //      screen: createStackNavigator(
+                   //          {
+                   //              // BasicInfo:{
+                   //              //     screen:BasicInfoScreen
+                   //              // },
+                   //              TestHome: {
+                   //                  screen: TestHomeScreen,
+                   //              },
+                   //
+                   //              TwitterAuth:{
+                   //                  screen: TwitterAuthScreen,
+                   //              },
+                   //          },
+                   //          {
+                   //              initialRouteName: 'TestHome',
+                   //          }
+                   //      ),
+                   //      navigationOptions: ({ }) => ({
+                   //          tabBarLabel: 'デバック',
+                   //          tabBarIcon:({tintColor}) => (<Icon name='user' type='feather' size={30} color={tintColor}/>)
+                   //      })
+                   //  },
                 },
                 {
                     tabBarOptions: {
@@ -74,21 +74,34 @@ const SignUpStack = createStackNavigator(
                         activeBackgroundColor: '#FFEB3B',
                         inactiveBackgroundColor: '#FFEB3B',
                         showIcon: true,
+                        safeAreaInset:{bottom:'never'},
+                        style:{height:80},
+                        //tabStyle:{height:100},
+                        labelStyle:{height:30}
+                        // labelStyle:{justifyContent:'flex-start'},
+                        // tabStyle:{justifyContent:'flex-start'}
+
+
+
                     }
                 }
-            )
+            ),
+            navigationOptions: ({ navigation }) => ({
+                header: null,
+
+            }),
         }
     },
     {
         initialRouteName: 'SignUp',
     },
-    {
-        headerMode: 'none',
-        header: null,
-        navigationOptions:{
-            headerVisible: false,
-         }
-    }
+    // {
+    //     headerMode: 'none',
+    //     header: null,
+    //     navigationOptions:{
+    //         headerVisible: false,
+    //      }
+    // }
 );
 
 

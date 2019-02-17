@@ -59,7 +59,7 @@ export default class ShopMapScreen extends React.Component {
                     latitudeDelta: LATITUDE_DELTA,
                     longitudeDelta: LONGITUDE_DELTA
                 }
-                console.warn(lat,long)
+                //console.warn(lat,long)
                 this.setState({region:currentRegion})
             },
             (error)    => { console.log(error) },
@@ -118,10 +118,11 @@ export default class ShopMapScreen extends React.Component {
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
-                    initialRegion={this.state.region}
+                    region={this.state.region}
                 >
                     {this.renderLibraryMarkers()}
                 </MapView>
+
 
             </View>
 
@@ -193,7 +194,7 @@ export default class ShopMapScreen extends React.Component {
                                  lat:doc.data().geopoint._lat,
                                  long:doc.data().geopoint._long
                              })
-                             console.warn(this.state.messages)
+                             //console.warn(this.state.messages)
                              this.setState({messages:geopoint})
                             // console.warn(this.state.messages)
                         })

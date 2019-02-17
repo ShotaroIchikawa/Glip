@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {
     Image,
     Platform,
@@ -10,6 +10,8 @@ import {
     View,
     ListView,
     FlatList,
+    SafeAreaView,
+
 } from 'react-native';
 import {
     Header,
@@ -49,6 +51,7 @@ export default class ShopListScreen extends React.Component {
 
     render() {
         return (
+            <SafeAreaView style={{flex:1,backgroundColor:'#FFEB3B'}}>
             <View style={styles.container}>
                 <Header
                     leftComponent={{icon: 'menu', type: 'Feather', color: '#000'}}
@@ -71,7 +74,10 @@ export default class ShopListScreen extends React.Component {
 
                 </ScrollView>
 
+
             </View>
+            </SafeAreaView>
+
         );
     }
 

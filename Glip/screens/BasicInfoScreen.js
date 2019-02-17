@@ -9,8 +9,11 @@ import {
     TouchableOpacity,
     View,
     ListView,
-    FlatList, Dimensions,
+    FlatList,
+    Dimensions,
+    Linking,
 } from 'react-native';
+import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT,Marker} from 'react-native-maps';
 import {
     Header,
     SearchBar,
@@ -22,12 +25,19 @@ import firebase from 'firebase'
 import "firebase/firestore";
 import {NavigationActions} from 'react-navigation';
 
-const {windowWidth} = Dimensions.get('window')
+const {windowWidth,height} = Dimensions.get('window')
+
+
+const LATITUDE_DELTA = 0.1000
+const LONGITUDE_DELTA = 0.1000;
 /************************************/
 export default class BasicInfoScreen extends React.Component {
-    static navigationOptions = {
-        header: null,
-    };
+     static navigationOptions = {
+        headerStyle:{
+            backgroundColor:'#FFEB3B',
+        },
+
+     };
 
 
     constructor(props){
@@ -46,13 +56,18 @@ export default class BasicInfoScreen extends React.Component {
                 long:""
             },
             shopPhoneNumber:"",
-
+            region: {
+                latitude: 38.261304,
+                longitude: 140.880196,
+                latitudeDelta:LATITUDE_DELTA,
+                longitudeDelta: 0.10000,
+            },
 
         };
     }
 
-    componentDidMount() {
-        this.getShopInfo(this.state.shopRef)
+    async componentDidMount() {
+       await this.getShopInfo(this.state.shopRef)
     }
 
 
@@ -61,13 +76,13 @@ export default class BasicInfoScreen extends React.Component {
         //Image.getSize(require('./img/sampleimg.jpg'),(width,height)=>{Alert.alert(width)})
         return (
             <View style={styles.container}>
-                <Header
-                    leftComponent={{icon: 'menu', type: 'Feather', color: '#000'}}
-                    centerComponent={{text: 'Glip', style: { fontFamily: 'Arial Rounded MT Bold', color: '#000', fontSize: 24}}}
-                    rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}
-                    backgroundColor="#FFEB3B"
-                />
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+                {/*<Header*/}
+                    {/*leftComponent={{icon: 'menu', type: 'Feather', color: '#000'}}*/}
+                    {/*centerComponent={{text: 'Glip', style: { fontFamily: 'Arial Rounded MT Bold', color: '#000', fontSize: 24}}}*/}
+                    {/*rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}*/}
+                    {/*backgroundColor="#FFEB3B"*/}
+                {/*/>*/}
+                <ScrollView style={styles.container} contentContainerStyle={StyleSheet.absoluteFillObject}>
                     <View>
                         <Image
                             style ={{width:this.state.imageWidth,height:this.state.imageHeight}}
@@ -75,12 +90,48 @@ export default class BasicInfoScreen extends React.Component {
                     </View>
                     <View style = {{height:170}}>
                         <Text style={styles.shopTitleTextStyle}>{this.state.shopName}</Text>
-                        <Text style={styles.shopDetailTextStyle}>
-                            Map URL:{this.state.shopMapUrl}</Text>
-                        <Text style={styles.shopDetailTextStyle}>Phone: {this.state.shopPhoneNumber}</Text>
-                        <Text style={styles.shopDetailTextStyle}>website: {this.state.shopSiteUrl}</Text>
+
+                        <Text style ={styles.shopDetailContainer}>
+                            <Text style={styles.shopDetailTextStyle} > {(this.state.shopMapUrl==="")? null:"MapUrl: "}
+                            </Text>
+                            <Text style={styles.shopDetailURLStyle} onPress={() => (this.state.shopMapUrl==="")? null: Linking.openURL(this.state.shopMapUrl)}>
+                            {(this.state.shopMapUrl==="")? null:this.state.shopMapUrl}
+                            </Text>
+                        </Text>
+                        <Text style ={styles.shopDetailContainer}>
+                            <Text style={styles.shopDetailTextStyle}>{(this.state.shopPhoneNumber==="")? null:" Phone: "+this.state.shopPhoneNumber }
+                            </Text>
+                        </Text>
+                        <Text style ={styles.shopDetailContainer}>
+                            <Text style={styles.shopDetailTextStyle}>{(this.state.shopSiteUrl==="")? null:" Website: "}
+                            </Text>
+                           <Text style={styles.shopDetailURLStyle}>{(this.state.shopSiteUrl==="")? null:this.state.shopSiteUrl}
+                           </Text>
+                        </Text>
 
                     </View>
+                    <MapView
+                        provider={PROVIDER_GOOGLE}
+                        style={{flex:1,position:'relative'}}
+                        region={{
+                            latitude:this.state.region.latitude,
+                            longitude:this.state.region.longitude,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                        }}
+
+                    >
+                        <Marker
+                        //key = {index}
+                        coordinate = {{latitude:this.state.region.latitude,longitude:this.state.region.longitude}}
+                        title={this.state.shopName}
+                        description={(this.state.shopSiteUrl==="")? null: this.state.shopSiteUrl}
+                        onPress={() => (this.state.shopSiteUrl==="")? null: Linking.openURL(this.state.shopSiteUrl)}
+                        />
+
+                    </MapView>
+
+
 
 
 
@@ -102,9 +153,11 @@ export default class BasicInfoScreen extends React.Component {
                     this.setState({
                         shopName:doc.data().name,
                         shopMapUrl:doc.data().map_url,
-                        shopMapGeopoint:{
-                            lat:doc.data().geopoint._lat,
-                            long:doc.data().geopoint._long,
+                        region:{
+                            latitude:doc.data().geopoint._lat,
+                            longitude:doc.data().geopoint._long,
+                            //  latitude: 38.261304,
+                            //                 longitude: 140.880196,
                         },
                         shopPhoneNumber:doc.data().phone,
                         shopSiteUrl:doc.data().website_url,
@@ -244,11 +297,33 @@ const styles = StyleSheet.create({
         fontSize:24,
     },
     shopTitleTextStyle:{
-        fontSize:36,
+        paddingLeft:20,
+        paddingTop:20,
+        width:340,
+        height:50,
+        textAlign:'left',
+        fontSize:24,
+        fontFamily: 'Helvetica'
     },
     shopDetailTextStyle:{
-        fontSize:18,
+
+        //paddingLeft:20,
+        fontSize:16,
+        paddingTop:3,
+        fontFamily:'Helvetica',
         color: '#8E8E93'
+    },
+    shopDetailURLStyle:{
+
+
+        fontSize:16,
+        paddingTop:3,
+        fontFamily:'Helvetica',
+        color: '#007AFF'
+    },
+    shopDetailContainer:{
+
+        paddingLeft:20,
     },
     buttonStyle: {
         alignSelf: 'stretch',
