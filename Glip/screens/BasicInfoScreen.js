@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     View,
     ListView,
-    FlatList,
+    FlatList, Dimensions,
 } from 'react-native';
 import {
     Header,
@@ -22,9 +22,9 @@ import firebase from 'firebase'
 import "firebase/firestore";
 import {NavigationActions} from 'react-navigation';
 
-
+const {windowWidth} = Dimensions.get('window')
 /************************************/
-export default class ShopListScreen extends React.Component {
+export default class BasicInfoScreen extends React.Component {
     static navigationOptions = {
         header: null,
     };
@@ -34,20 +34,31 @@ export default class ShopListScreen extends React.Component {
         super(props);
         this.state = {
             shops: [],
-            shopRef:[],
+            shopRef:this.props.navigation.state.params.shop_ref,
+
+            imageWidth: 375,
+            imageHeight: 175,
+            shopName:"",
+            shopMapUrl:"",
+            shopSiteUrl:"",
+            shopMapGeopoint:{
+                lat:"",
+                long:""
+            },
+            shopPhoneNumber:"",
 
 
         };
     }
 
-    componentDidMount(){
-
-        this.getUserShopGroup();
+    componentDidMount() {
+        this.getShopInfo(this.state.shopRef)
     }
 
 
 
     render() {
+        //Image.getSize(require('./img/sampleimg.jpg'),(width,height)=>{Alert.alert(width)})
         return (
             <View style={styles.container}>
                 <Header
@@ -56,103 +67,54 @@ export default class ShopListScreen extends React.Component {
                     rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}
                     backgroundColor="#FFEB3B"
                 />
-
-
-
-
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+                    <View>
+                        <Image
+                            style ={{width:this.state.imageWidth,height:this.state.imageHeight}}
+                            source ={require('./img/sampleimg.jpg')}/>
+                    </View>
+                    <View style = {{height:170}}>
+                        <Text style={styles.shopTitleTextStyle}>{this.state.shopName}</Text>
+                        <Text style={styles.shopDetailTextStyle}>
+                            Map URL:{this.state.shopMapUrl}</Text>
+                        <Text style={styles.shopDetailTextStyle}>Phone: {this.state.shopPhoneNumber}</Text>
+                        <Text style={styles.shopDetailTextStyle}>website: {this.state.shopSiteUrl}</Text>
 
-                    {/*<View style={styles.buttons}>*/}
-                        {/*<Text>aaaaas</Text>*/}
+                    </View>
 
-                    {/*</View>*/}
-                    {this.ShowShopList()}
+
 
 
                 </ScrollView>
+
+
+
 
             </View>
         );
     }
 
-    ShowShopList(){
-        const list = this.state.shops;
-        return(
-            <List containerStyle ={{backgroundColor:'#F4EDE0'}}>{
+    getShopInfo(shopRef){
 
-                 list.map((l) => (
-                    // <ListItem
-                    //     key={l.name}
-                    //     title={l.name}
-                    //    onPress={()=>Alert.alert("pushed")}
-                    // />
-                    <TouchableOpacity onPress={()=>
-                        this.props.navigation.dispatch(NavigationActions.navigate({routeName:'BasicInfo',params:{shop_ref:l.shop_ref}}))}>
-                     <Card
-                         image = {require('./img/sampleimg.jpg')}
-                         imageWrapperStyle ={{margin:10}}
-
-                         key={l.name}
-                         //title={l.name}
-                         containerStyle={{margin:5,marginBottom:10, borderRadius: 5}}
-                         //下を帰る必要あり
-
-                        // onPress={()=>this.props.navigation.dispatch(NavigationActions.navigate({routeName:'BasicInfo',params:{shop_ref:l.shop_ref}}))}
-                     >
-                         <Text style={styles.shopTextStyle}>{l.name}</Text>
-                     </Card>
-                    </TouchableOpacity>
-                 ))
-
-            }
-            </List>
-
-        )
-    }
-
-
-    getUserShopGroup(){
-
-        const userRef = firebase.firestore().collection('users').doc(this.uid);
-        //const getDoc =
-        userRef.collection('shops').onSnapshot((querySnapshot)=>{
-            const data=[];
-            querySnapshot.forEach((doc)=>{
-                data.push({
-                    ref: doc.data().shop_ref
-                });
-            });
-
-            let shopName=[];
-            for(let i=0;i<data.length;i++) {
-
-
-                let ref = data[i].ref;
+                let ref = shopRef
                 ref.get().then((doc)=>{
-                   // console.warn(doc.data().name);
-                    //console.warn(doc.data().geopoint._long);
-                    //let data = this.state.messages;
 
-                    shopName.push({
-                        name:doc.data().name,
-                        shop_ref:ref
-
+                    this.setState({
+                        shopName:doc.data().name,
+                        shopMapUrl:doc.data().map_url,
+                        shopMapGeopoint:{
+                            lat:doc.data().geopoint._lat,
+                            long:doc.data().geopoint._long,
+                        },
+                        shopPhoneNumber:doc.data().phone,
+                        shopSiteUrl:doc.data().website_url,
                     })
-                    this.setState({shops:shopName})
-                    // console.warn(this.state.messages)
+
                 })
             }
 
-            this.setState({shops:shopName})
-
-            // for(let i=0;i<geopoint.length;i++) {
-            //     console.warn(geopoint[i]._lat)
-            // }
-
-        });
 
 
-    };
 
     get shops(){
         return firebase.firestore().collection("shops");
@@ -195,7 +157,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     contentContainer: {
-       // paddingTop: 30,
+        // paddingTop: 30,
         backgroundColor:'#F4EDE0'
     },
     welcomeContainer: {
@@ -280,6 +242,13 @@ const styles = StyleSheet.create({
     },
     shopTextStyle:{
         fontSize:24,
+    },
+    shopTitleTextStyle:{
+        fontSize:36,
+    },
+    shopDetailTextStyle:{
+        fontSize:18,
+        color: '#8E8E93'
     },
     buttonStyle: {
         alignSelf: 'stretch',

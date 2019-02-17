@@ -9,11 +9,15 @@ import ShopListScreen from "../screens/ShopListScreen";
 import TestHomeScreen from "../screens/TestHomeScreen";
 import TwitterAuthScreen from "../screens/TwitterAuthScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import BasicInfoScreen from "../screens/BasicInfoScreen"
 
 const SignUpStack = createStackNavigator(
     {
         SignUp: {screen: SignUpScreen},
         TwitterSignUp:{screen:TwitterAuthScreen},
+        BasicInfo:{
+            screen:BasicInfoScreen
+        },
         Home: {
             screen: createBottomTabNavigator(
                 {
@@ -42,6 +46,9 @@ const SignUpStack = createStackNavigator(
                     Debug:{
                         screen: createStackNavigator(
                             {
+                                BasicInfo:{
+                                    screen:BasicInfoScreen
+                                },
                                 TestHome: {
                                     screen: TestHomeScreen,
                                 },
@@ -51,7 +58,7 @@ const SignUpStack = createStackNavigator(
                                 },
                             },
                             {
-                                initialRouteName: 'TestHome',
+                                initialRouteName: 'BasicInfo',
                             }
                         ),
                         navigationOptions: ({ }) => ({
