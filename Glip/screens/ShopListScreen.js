@@ -8,13 +8,18 @@ import {
     Alert,
     TouchableOpacity,
     View,
+    ListView,
+    FlatList,
 } from 'react-native';
 import {
     Header,
     SearchBar,
-    Button
+    Button,
+    List,
+    ListItem, Card,
 } from 'react-native-elements';
-
+import firebase from 'firebase'
+import "firebase/firestore";
 
 
 /************************************/
@@ -26,8 +31,19 @@ export default class ShopListScreen extends React.Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            shops: [],
+            shopRef:[],
 
+
+        };
     }
+
+    componentDidMount(){
+
+        this.getUserShopGroup();
+    }
+
 
 
     render() {
@@ -45,9 +61,11 @@ export default class ShopListScreen extends React.Component {
 
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-                    <View style={styles.buttons}>
-                        <Text>aaaaas</Text>
-                    </View>
+                    {/*<View style={styles.buttons}>*/}
+                        {/*<Text>aaaaas</Text>*/}
+
+                    {/*</View>*/}
+                    {this.ShowShopList()}
 
 
                 </ScrollView>
@@ -56,6 +74,92 @@ export default class ShopListScreen extends React.Component {
         );
     }
 
+    ShowShopList(){
+        const list = this.state.shops;
+        return(
+            <List containerStyle ={{backgroundColor:'#F4EDE0'}}>{
+
+                 list.map((l) => (
+                    // <ListItem
+                    //     key={l.name}
+                    //     title={l.name}
+                    //    onPress={()=>Alert.alert("pushed")}
+                    // />
+                     <Card
+                         image = {require('./img/sampleimg.jpg')}
+                         imageWrapperStyle ={{margin:10}}
+                         key={l.name}
+                         //title={l.name}
+                         containerStyle={{margin:5,marginBottom:10, borderRadius: 5}}
+                     >
+                         <Text style={styles.shopTextStyle}>{l.name}</Text>
+                     </Card>
+                 ))
+
+            }
+            </List>
+
+        )
+    }
+
+
+    getUserShopGroup(){
+
+        const userRef = firebase.firestore().collection('users').doc(this.uid);
+        //const getDoc =
+        userRef.collection('shops').onSnapshot((querySnapshot)=>{
+            const data=[];
+            querySnapshot.forEach((doc)=>{
+                data.push({
+                    ref: doc.data().shop_ref
+                });
+            });
+
+            let shopName=[];
+            for(let i=0;i<data.length;i++) {
+
+
+                let ref = data[i].ref;
+                ref.get().then((doc)=>{
+                    console.warn(doc.data().name);
+                    //console.warn(doc.data().geopoint._long);
+                    //let data = this.state.messages;
+                    shopName.push({
+                        name:doc.data().name,
+
+                    })
+                    this.setState({shops:shopName})
+                    // console.warn(this.state.messages)
+                })
+            }
+
+            this.setState({shops:shopName})
+
+            // for(let i=0;i<geopoint.length;i++) {
+            //     console.warn(geopoint[i]._lat)
+            // }
+
+        });
+
+
+    };
+
+    get shops(){
+        return firebase.firestore().collection("shops");
+    }
+
+    //ショートカット用の変数
+    get userCollection(){
+        return firebase.firestore().collection("users");
+    }
+
+    get uid(){
+        return (firebase.auth().currentUser||{}).uid;
+    }
+
+    get name(){
+        return (firebase.auth().currentUser||{}).displayName;
+    }
 
 }
 
@@ -71,7 +175,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#F4EDE0',
     },
     developmentModeText: {
         marginBottom: 20,
@@ -81,7 +185,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     contentContainer: {
-        paddingTop: 30,
+       // paddingTop: 30,
+        backgroundColor:'#F4EDE0'
     },
     welcomeContainer: {
         alignItems: 'center',
@@ -162,6 +267,9 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         paddingBottom: 10,
         paddingTop: 40
+    },
+    shopTextStyle:{
+        fontSize:24,
     },
     buttonStyle: {
         alignSelf: 'stretch',
