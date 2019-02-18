@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Dimensions,Alert,YellowBox} from 'react-native';
+import {Platform, StyleSheet, Text, View,Dimensions,Alert,YellowBox,Animated,ScrollView,Image,TouchableOpacity} from 'react-native';
 import {
     Header,
     SearchBar,
-    Button
+    Button,
+    Card
 } from 'react-native-elements';
 import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT,Marker} from 'react-native-maps';
 import firebase from 'firebase'
 import "firebase/firestore";
+import Carousel from 'react-native-snap-carousel';
+import {NavigationActions} from "react-navigation";
+
 
 const {width, height} = Dimensions.get('window')
+
+const CARD_HEIGHT =height/5;
+const CARD_WIDTH = 200;
 
 const SCREEN_HEIGHT = height
 const SCREEN_WIDTH = width
@@ -29,6 +36,7 @@ export default class ShopMapScreen extends React.Component {
 
         this.state = {
             messages: [],
+            markers:[],
             shopRef:[],
             region: {
                 latitude: 38.261304,
@@ -38,9 +46,16 @@ export default class ShopMapScreen extends React.Component {
             },
             shopName:"",
             locationResult:null,
-            currentLocation:{longitude:"",latitude:""}
+            currentLocation:{longitude:"",latitude:""},
+            scrolledx:0,
+
         };
 
+    }
+
+    componentWillMount(){
+         this.index =0;
+         this.animation = new Animated.Value(0);
     }
 
 
@@ -71,36 +86,60 @@ export default class ShopMapScreen extends React.Component {
 
         )
         this.getUserShopGroup()
+        console.warn(this.index);
 
+/*********************/
+        // We should detect when scrolling has stopped then animate
+        // We should just debounce the event listener here
+        this.animation.addListener(({ value }) => {
+            let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+            if(index >= this.state.markers.length) {
+                index = this.state.markers.length - 1;
+            }
+            if(index <= 0) {
+                index = 0;
+            }
+            clearTimeout(this.regionTimeout);
+            this.regionTimeout = setTimeout(() => {
+                if(this.index !== index) {
+                    this.index = index;
+
+                   // this.state.markers[index]
+
+                    this.map.animateToRegion({
+                        latitude:this.state.markers[index].geopoint.lat,
+                        longitude:this.state.markers[index].geopoint.long,
+                        latitudeDelta: this.state.region.latitudeDelta,
+                        longitudeDelta: this.state.region.longitudeDelta,
+                    }, 350);
+
+                }
+            }, 10);
+        });
 
         //console.warn(this.state.messages)
     }
 
-    // //state.messageの中にある緯度経度情報をMapviewMakerの塊として返す
-    // renderLibraryMarkers(){
-    //     return this.state.messages.map((message,index)=>{
-    //         const coords = {
-    //             latitude: message.geopoint._lat,
-    //             longitude: message.geopoint._long,
-    //         };
-    //         const name = message.name;
-    //         const url = message.website_url;
-    //
-    //         return(
-    //             <MapView.Marker
-    //                 key = {index}
-    //                 coordinate = {coords}
-    //                 title={`title: ${name} `}
-    //                 description={`URL: ${url}`}
-    //                 onPress={() => { this.onPressMaker(name) }}
-    //             />
-    //         );
-    //     });
-    // }
-
-
-
     render() {
+        //この変数はあまり使わない
+        const interpolations = this.state.markers.map((marker, index) => {
+            const inputRange = [
+                (index - 1) * CARD_WIDTH,
+                index * CARD_WIDTH,
+                ((index + 1) * CARD_WIDTH),
+            ];
+            const scale = this.animation.interpolate({
+                inputRange,
+                outputRange: [1, 2.5, 1],
+                extrapolate: "clamp",
+            });
+            const opacity = this.animation.interpolate({
+                inputRange,
+                outputRange: [0.35, 1, 0.35],
+                extrapolate: "clamp",
+            });
+            return { scale, opacity };
+        });
         return (
             <View style={styles.container}>
                 <Header
@@ -116,16 +155,100 @@ export default class ShopMapScreen extends React.Component {
                 />
 
                 <MapView
-                    provider={PROVIDER_GOOGLE}
+                    ref={map => this.map = map}
+                    provider ={PROVIDER_GOOGLE}
+                    initialRegion={this.state.region}
                     style={styles.map}
-                    region={this.state.region}
                 >
-                    {this.renderLibraryMarkers()}
+                    {this.state.markers.map((marker, index) => {
+                        const scaleStyle = {
+                            transform: [
+                                {
+                                    scale: interpolations[index].scale,
+                                },
+                            ],
+                        };
+                        const opacityStyle = {
+                            opacity: interpolations[index].opacity,
+                        };
+                        const coords = {
+                            latitude: marker.geopoint.lat,
+                            longitude: marker.geopoint.long,
+                        }
+                        return (
+                            <Marker.Animated key={index} coordinate={coords}  title={"marker"} description={"description"}/>
+                               /* <Animated.View style={[styles.markerWrap, opacityStyle]}>
+                                    <Animated.View style={[styles.ring, scaleStyle]} />
+                                    <View style={styles.marker} />
+                                </Animated.View>*/
+                           // </Marker.Animated>
+                        );
+                    })}
                 </MapView>
 
 
+                <Animated.View
+                    style={styles.scrollView}
+                    contentContainerStyle={styles.endPadding}
+                >
+
+                    <Carousel
+                        style={styles.carouselStyle}
+                        ref={(c) => { this._carousel = c; }}
+                        data={this.state.markers}
+                        renderItem={this._renderItem.bind(this)}
+                        sliderWidth={width}
+                        itemWidth={200}
+                        navigation ={this.props.navigation}
+                        onScroll={(event)=>{
+                            this.animation.setValue(event.nativeEvent.contentOffset.x);
+                        }}
+                        useScrollView={true}
+
+                    />
+                </Animated.View>
+
             </View>
 
+        );
+
+    }
+
+
+    _renderItem({ item, index }) {
+        const {navigation} = this.props;
+        return(
+
+           /* <View
+
+        style={styles.card} key={index}>
+            <Image
+        source={require('./img/sampleimg.jpg')}
+        style={styles.cardImage}
+        resizeMode="cover"
+            />
+            <View style={styles.textContent}>
+            <Text numberOfLines={1} style={styles.cardtitle}>{item.name}</Text>
+
+    </View>
+    </View>*/
+
+        <View key={index}>
+            <TouchableOpacity onPress={()=>{this.props.navigation.dispatch(NavigationActions.navigate({routeName:'BasicInfo',params:{shop_ref:item.shop_ref}}))}}>
+
+              <Card
+                   image = {require('./img/sampleimg.jpg')}
+                   imageWrapperStyle ={{margin:10}}
+                  // key={l.name}
+                  //title={l.name}
+                   containerStyle={{margin:5,marginBottom:10, borderRadius: 5}}
+                 >
+                  <View style={styles.textContent}>
+                      <Text style={styles.cardtitle}>{item.name}</Text>
+                  </View>
+              </Card>
+          </TouchableOpacity>
+        </View>
         );
     }
 
@@ -179,9 +302,7 @@ export default class ShopMapScreen extends React.Component {
                         });
                     });
 
-                  //console.warn(data.length)
-                    // for(let i=0;i<data.length;i++) {
-                    let geopoint=[];
+                    let shopData =[];
                     for(let i=0;i<data.length;i++) {
 
 
@@ -190,74 +311,23 @@ export default class ShopMapScreen extends React.Component {
                              //console.warn(doc.data().geopoint._lat);
                              //console.warn(doc.data().geopoint._long);
                             //let data = this.state.messages;
-                             geopoint.push({
-                                 lat:doc.data().geopoint._lat,
-                                 long:doc.data().geopoint._long
+                             shopData.push({
+                                 name:doc.data().name,
+                                 shop_ref:ref,
+                                 geopoint:{
+                                     lat:doc.data().geopoint._lat,
+                                     long:doc.data().geopoint._long
+                                 }
                              })
-                             //console.warn(this.state.messages)
-                             this.setState({messages:geopoint})
+
+                             this.setState({markers:shopData})
                             // console.warn(this.state.messages)
                         })
                     }
+                    this.setState({markers:shopData})
 
-                    this.setState({messages:geopoint})
-
-                    // for(let i=0;i<geopoint.length;i++) {
-                    //     console.warn(geopoint[i]._lat)
-                    // }
 
                 });
-
-
-
-          //  get()
-          //        .then(snapshot=>{
-          //
-          //
-          //           var messages = snapshot.docs.map((doc) => {
-          //               console.warn(doc.id);
-          //               return doc.data().doc_ref;
-          //
-          //           });
-
-
-                    // this.setState({message:messages})
-                    // messagesをstateに渡す
-
-                // });
-
-
-
-
-
-
-
-
-
-
-
-        var array = {};
-
-
-
-
-        // const observer = shopRef.
-        // onSnapshot(this.getData);
-        //
-        // for( var i=0; i<this.state.messages.length; i++) {
-        //
-        //     let documentRef = firestore.document(this.state.messages[i].shop_ref);
-        //     documentRef.onSnapshot((querySnapshot)=>{
-        //         const name = querySnapshot.docs.map((doc)=>{
-        //             return doc.data().name;
-        //         })
-        //     });
-        //     Alert.alert(name);
-        //     //const str =  `name: ${this.state.messages[i].name}  URL: ${this.state.messages[i].website_url} _lat: ${this.state.messages[i].geopoint._lat}, _long: ${this.state.messages[i].geopoint._long}`;
-        //
-        //     //console.log( str );
-        //
-        // }
 
 
     };
@@ -409,5 +479,68 @@ const styles = StyleSheet.create({
     },
     button:{
         height:50,
-    }
+    },
+    scrollView: {
+        position: "absolute",
+        bottom: 20,
+        left: 0,
+        right: 0,
+        paddingVertical: 10,
+    },
+    carouselStyle: {
+        padding: 25,
+    },
+    endPadding: {
+        paddingRight: width - CARD_WIDTH,
+    },
+    card: {
+        padding: 10,
+        elevation: 2,
+        backgroundColor: "rgba(244,255,244, 1)",
+        marginHorizontal: 10,
+        margin: 30,
+        shadowColor: "rgba(0,72,51, 0.9)",
+        shadowRadius: 5,
+        shadowOpacity: 0.3,
+        shadowOffset: { x: 0, y: 0 },
+        height: CARD_HEIGHT,
+        width: CARD_WIDTH,
+    },
+    cardImage: {
+        flex: 3,
+        width: "100%",
+        height: "100%",
+        alignSelf: "center",
+    },
+    textContent: {
+        flex: 1,
+    },
+    cardtitle: {
+        fontSize: 12,
+        marginTop: 5,
+        fontWeight: "bold",
+    },
+    cardDescription: {
+        fontSize: 12,
+        color: "#444",
+    },
+    markerWrap: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    marker: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: "rgba(0,153,102, 0.9)",
+    },
+    ring: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        backgroundColor: "rgba(0,153,102, 0.5)",
+        position: "absolute",
+        borderWidth: 0.5,
+        borderColor: "rgba(0,153,102, 0.5)",
+    },
 });
