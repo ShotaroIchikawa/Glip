@@ -6,7 +6,7 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>405E995B-4227-4977-A934-98961151821A</key>
+		<key>71386BB3-A2DA-4854-B980-0A8F54D30646</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>405E995B-4227-4977-A934-98961151821A.xcactivitylog</string>
+			<string>71386BB3-A2DA-4854-B980-0A8F54D30646.xcactivitylog</string>
 			<key>highLevelStatus</key>
 			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
@@ -27,15 +27,15 @@
 			<key>signature</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>572166395.79597402</real>
+			<real>572193156.87250805</real>
 			<key>timeStoppedRecording</key>
-			<real>572166402.12558103</real>
+			<real>572193160.35095298</real>
 			<key>title</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>405E995B-4227-4977-A934-98961151821A</string>
+			<string>71386BB3-A2DA-4854-B980-0A8F54D30646</string>
 		</dict>
-		<key>8958FB68-3258-4F1D-B680-087B465BEBB7</key>
+		<key>C0CC1214-EAAB-43C2-94C0-D6026301F679</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -44,7 +44,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>8958FB68-3258-4F1D-B680-087B465BEBB7.xcactivitylog</string>
+			<string>C0CC1214-EAAB-43C2-94C0-D6026301F679.xcactivitylog</string>
 			<key>highLevelStatus</key>
 			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
@@ -56,13 +56,13 @@
 			<key>signature</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>572161023.27083302</real>
+			<real>572193068.791067</real>
 			<key>timeStoppedRecording</key>
-			<real>572161027.28762698</real>
+			<real>572193093.88425303</real>
 			<key>title</key>
 			<string>Building workspace Glip with scheme Glip and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>8958FB68-3258-4F1D-B680-087B465BEBB7</string>
+			<string>C0CC1214-EAAB-43C2-94C0-D6026301F679</string>
 		</dict>
 	</dict>
 </dict>
