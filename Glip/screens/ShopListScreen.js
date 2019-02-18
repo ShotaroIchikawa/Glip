@@ -64,7 +64,16 @@ export default class ShopListScreen extends React.Component {
 
 
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+                    <SearchBar
+                        //lightTheme
+                        round
+                        containerStyle={{backgroundColor:'#F4EDE0',borderBottomColor:'transparent',
+                            borderTopColor:'transparent',
+                        }}
+                        inputStyle={{backgroundColor:'white'}}
 
+                        placeholder='お店を検索'
+                    />
                     {/*<View style={styles.buttons}>*/}
                         {/*<Text>aaaaas</Text>*/}
 

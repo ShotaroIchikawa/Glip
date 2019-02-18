@@ -1,13 +1,26 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Dimensions,Alert,YellowBox,Animated,ScrollView,Image,TouchableOpacity} from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    Alert,
+    YellowBox,
+    Animated,
+    ScrollView,
+    Image,
+    TouchableOpacity,
+    SafeAreaView
+} from 'react-native';
 import {
     Header,
     SearchBar,
     Button,
-    Card
+    Card,
 } from 'react-native-elements';
 import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT,Marker} from 'react-native-maps';
-import firebase from 'firebase'
+import firebase from 'firebase';
 import "firebase/firestore";
 import Carousel from 'react-native-snap-carousel';
 import {NavigationActions} from "react-navigation";
@@ -16,7 +29,7 @@ import {NavigationActions} from "react-navigation";
 const {width, height} = Dimensions.get('window')
 
 const CARD_HEIGHT =height/5;
-const CARD_WIDTH = 200;
+const CARD_WIDTH = 250;
 
 const SCREEN_HEIGHT = height
 const SCREEN_WIDTH = width
@@ -86,7 +99,7 @@ export default class ShopMapScreen extends React.Component {
 
         )
         this.getUserShopGroup()
-        console.warn(this.index);
+
 
 /*********************/
         // We should detect when scrolling has stopped then animate
@@ -141,25 +154,36 @@ export default class ShopMapScreen extends React.Component {
             return { scale, opacity };
         });
         return (
+            <SafeAreaView style={{flex:1,backgroundColor:'#FFEB3B'}}>
             <View style={styles.container}>
                 <Header
-                    leftComponent={{icon: 'menu', type: 'Feather', color: '#fff'}}
-                    centerComponent={{text: 'Gourmet Clip', style: { color: '#fff'}}}
-                    ri  ghtComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#fff'}}
-                    backgroundColor="#fea031"
-                />
-                <SearchBar
-                    lightTheme
-                    round
-                    placeholder='お店を検索'
+                    leftComponent={{icon: 'menu', type: 'Feather', color: '#000'}}
+                    centerComponent={{text: 'Glip', style: { fontFamily: 'Arial Rounded MT Bold', color: '#000', fontSize: 24}}}
+                    rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}
+                    backgroundColor="#FFEB3B"
                 />
 
+
+                <SearchBar
+                    //lightTheme
+                    round
+                    containerStyle={{
+                        backgroundColor:'transparent',
+                        borderBottomColor:'transparent',
+                        borderTopColor:'transparent',
+                    }}
+                    style={{position:'absolute'}}
+                    inputStyle={{backgroundColor:'white'}}
+                    //clearIcon ={{color:'#999',name:'search'}}
+                    placeholder='お店を検索'
+                />
                 <MapView
                     ref={map => this.map = map}
                     provider ={PROVIDER_GOOGLE}
                     initialRegion={this.state.region}
                     style={styles.map}
                 >
+
                     {this.state.markers.map((marker, index) => {
                         const scaleStyle = {
                             transform: [
@@ -198,7 +222,7 @@ export default class ShopMapScreen extends React.Component {
                         data={this.state.markers}
                         renderItem={this._renderItem.bind(this)}
                         sliderWidth={width}
-                        itemWidth={200}
+                        itemWidth={250}
                         navigation ={this.props.navigation}
                         onScroll={(event)=>{
                             this.animation.setValue(event.nativeEvent.contentOffset.x);
@@ -207,9 +231,9 @@ export default class ShopMapScreen extends React.Component {
 
                     />
                 </Animated.View>
+                </View>
 
-            </View>
-
+            </SafeAreaView>
         );
 
     }
@@ -237,12 +261,17 @@ export default class ShopMapScreen extends React.Component {
             <TouchableOpacity onPress={()=>{this.props.navigation.dispatch(NavigationActions.navigate({routeName:'BasicInfo',params:{shop_ref:item.shop_ref}}))}}>
 
               <Card
-                   image = {require('./img/sampleimg.jpg')}
-                   imageWrapperStyle ={{margin:10}}
+                   //image = {require('./img/sampleimg.jpg')}
+                   //imageWrapperStyle ={{margin:10}}
                   // key={l.name}
                   //title={l.name}
                    containerStyle={{margin:5,marginBottom:10, borderRadius: 5}}
                  >
+                  <View>
+                      <Image
+                          style ={{width:200,height:105}}
+                          source ={require('./img/sampleimg.jpg')}/>
+                  </View>
                   <View style={styles.textContent}>
                       <Text style={styles.cardtitle}>{item.name}</Text>
                   </View>
@@ -367,6 +396,7 @@ export default class ShopMapScreen extends React.Component {
 const styles = StyleSheet.create({
     map:{
       flex:1,
+      backgroundColor: '#fff',
     },
     header:{
         color: '#fea031',
@@ -516,9 +546,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cardtitle: {
-        fontSize: 12,
+        fontSize: 16,
         marginTop: 5,
-        fontWeight: "bold",
+        fontFamily: "Helvetica",
     },
     cardDescription: {
         fontSize: 12,

@@ -31,13 +31,13 @@ const {windowWidth,height} = Dimensions.get('window')
 const LATITUDE_DELTA = 0.1000
 const LONGITUDE_DELTA = 0.1000;
 
-export default class BasicInfoScreen extends React.Component {
-     static navigationOptions = {
+export default class OriginalTweetScreen extends React.Component {
+    static navigationOptions = {
         headerStyle:{
             backgroundColor:'#FFEB3B',
         },
 
-     };
+    };
 
 
     constructor(props){
@@ -49,25 +49,14 @@ export default class BasicInfoScreen extends React.Component {
             imageWidth: 375,
             imageHeight: 175,
             shopName:"",
-            shopMapUrl:"",
-            shopSiteUrl:"",
-            shopMapGeopoint:{
-                lat:"",
-                long:""
-            },
-            shopPhoneNumber:"",
-            region: {
-                latitude: 38.261304,
-                longitude: 140.880196,
-                latitudeDelta:LATITUDE_DELTA,
-                longitudeDelta: 0.10000,
-            },
+            tweetURL:"",
+
 
         };
     }
 
     async componentDidMount() {
-       await this.getShopInfo(this.state.shopRef)
+        await this.getTweetInfo(this.state.shopRef)
     }
 
 
@@ -77,10 +66,10 @@ export default class BasicInfoScreen extends React.Component {
         return (
             <View style={styles.container}>
                 {/*<Header*/}
-                    {/*leftComponent={{icon: 'menu', type: 'Feather', color: '#000'}}*/}
-                    {/*centerComponent={{text: 'Glip', style: { fontFamily: 'Arial Rounded MT Bold', color: '#000', fontSize: 24}}}*/}
-                    {/*rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}*/}
-                    {/*backgroundColor="#FFEB3B"*/}
+                {/*leftComponent={{icon: 'menu', type: 'Feather', color: '#000'}}*/}
+                {/*centerComponent={{text: 'Glip', style: { fontFamily: 'Arial Rounded MT Bold', color: '#000', fontSize: 24}}}*/}
+                {/*rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}*/}
+                {/*backgroundColor="#FFEB3B"*/}
                 {/*/>*/}
                 <ScrollView style={styles.container} contentContainerStyle={StyleSheet.absoluteFillObject}>
                     <View>
@@ -91,50 +80,8 @@ export default class BasicInfoScreen extends React.Component {
                     <View style = {{height:170}}>
                         <Text style={styles.shopTitleTextStyle}>{this.state.shopName}</Text>
 
-                        <Text style ={styles.shopDetailContainer}>
-                            <Text style={styles.shopDetailTextStyle} > {(this.state.shopMapUrl==="")? null:"MapUrl: "}
-                            </Text>
-                            <Text style={styles.shopDetailURLStyle} onPress={() => (this.state.shopMapUrl==="")? null: Linking.openURL(this.state.shopMapUrl)}>
-                            {(this.state.shopMapUrl==="")? null:this.state.shopMapUrl}
-                            </Text>
-                        </Text>
-                        <Text style ={styles.shopDetailContainer}>
-                            <Text style={styles.shopDetailTextStyle}>{(this.state.shopPhoneNumber==="")? null:" Phone: "+this.state.shopPhoneNumber }
-                            </Text>
-                        </Text>
-                        <Text style ={styles.shopDetailContainer}>
-                            <Text style={styles.shopDetailTextStyle}>{(this.state.shopSiteUrl==="")? null:" Website: "}
-                            </Text>
-                           <Text style={styles.shopDetailURLStyle}>{(this.state.shopSiteUrl==="")? null:this.state.shopSiteUrl}
-                           </Text>
-                        </Text>
 
                     </View>
-                    <MapView
-                        provider={PROVIDER_GOOGLE}
-                        style={{flex:1,position:'relative'}}
-                        region={{
-                            latitude:this.state.region.latitude,
-                            longitude:this.state.region.longitude,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                        }}
-
-                    >
-                        <Marker
-                        //key = {index}
-                        coordinate = {{latitude:this.state.region.latitude,longitude:this.state.region.longitude}}
-                        title={this.state.shopName}
-                        description={(this.state.shopSiteUrl==="")? null: this.state.shopSiteUrl}
-                        onPress={() => (this.state.shopSiteUrl==="")? null: Linking.openURL(this.state.shopSiteUrl)}
-                        />
-
-                    </MapView>
-
-
-
-
-
 
                 </ScrollView>
 
@@ -145,29 +92,55 @@ export default class BasicInfoScreen extends React.Component {
         );
     }
 
+    getTweetInfo(shopRef){
+        let ref = shopRef;
+        ref.get().then((doc)=>{
+            this.setState({
+                shopName:doc.data().name,
+            })
+        });
+
+        let snsPostCollectionRef = this.snsPosts();
+        snsPostCollectionRef.onSnapshot((querySnapshot)=>{
+
+            querySnapshot.forEach((doc)=>{
+
+                if(doc.data().shop_ref===ref){
+                    this.setState({tweetURL:doc.data().url})
+                }
+
+            });
+
+        })
+
+    }
+
+/*
     getShopInfo(shopRef){
 
-                let ref = shopRef
-                ref.get().then((doc)=>{
+        let ref = shopRef
+        ref.get().then((doc)=>{
 
-                    this.setState({
-                        shopName:doc.data().name,
-                        shopMapUrl:doc.data().map_url,
-                        region:{
-                            latitude:doc.data().geopoint._lat,
-                            longitude:doc.data().geopoint._long,
-                            //  latitude: 38.261304,
-                            //                 longitude: 140.880196,
-                        },
-                        shopPhoneNumber:doc.data().phone,
-                        shopSiteUrl:doc.data().website_url,
-                    })
+            this.setState({
+                shopName:doc.data().name,
+                shopMapUrl:doc.data().map_url,
+                region:{
+                    latitude:doc.data().geopoint._lat,
+                    longitude:doc.data().geopoint._long,
+                    //  latitude: 38.261304,
+                    //                 longitude: 140.880196,
+                },
+                shopPhoneNumber:doc.data().phone,
+                shopSiteUrl:doc.data().website_url,
+            })
 
-                })
-            }
+        })
+    }
+*/
 
-
-
+    get snsPosts(){
+        return firebase.firestore().collection("sns_posts");
+    }
 
     get shops(){
         return firebase.firestore().collection("shops");
@@ -269,8 +242,7 @@ const styles = StyleSheet.create({
     tabBarInfoText: {
         fontSize: 17,
         color: 'rgba(96,100,109, 1)',
-
-textAlign: 'center',
+        textAlign: 'center',
     },
     navigationFilename: {
         marginTop: 5,

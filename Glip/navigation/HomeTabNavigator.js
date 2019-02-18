@@ -9,15 +9,14 @@ import ShopListScreen from "../screens/ShopListScreen";
 import TestHomeScreen from "../screens/TestHomeScreen";
 import TwitterAuthScreen from "../screens/TwitterAuthScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import BasicInfoScreen from "../screens/BasicInfoScreen"
+import BasicInfoScreen from "../screens/BasicInfoScreen";
+import OriginalTweetScreen from "../screens/OriginalTweetScreen";
 
 const SignUpStack = createStackNavigator(
     {
         SignUp: {screen: SignUpScreen},
         TwitterSignUp:{screen:TwitterAuthScreen},
-        BasicInfo:{
-            screen:BasicInfoScreen
-        },
+        BasicInfo:{screen:BasicInfoScreen},
         Home: {
             screen: createBottomTabNavigator(
                 {
@@ -43,29 +42,7 @@ const SignUpStack = createStackNavigator(
                             tabBarIcon:({tintColor}) => (<Icon name='map-pin' type='feather' size={30} color={tintColor}/>)
                         })
                     },
-                   // Debug:{
-                   //      screen: createStackNavigator(
-                   //          {
-                   //              // BasicInfo:{
-                   //              //     screen:BasicInfoScreen
-                   //              // },
-                   //              TestHome: {
-                   //                  screen: TestHomeScreen,
-                   //              },
-                   //
-                   //              TwitterAuth:{
-                   //                  screen: TwitterAuthScreen,
-                   //              },
-                   //          },
-                   //          {
-                   //              initialRouteName: 'TestHome',
-                   //          }
-                   //      ),
-                   //      navigationOptions: ({ }) => ({
-                   //          tabBarLabel: 'デバック',
-                   //          tabBarIcon:({tintColor}) => (<Icon name='user' type='feather' size={30} color={tintColor}/>)
-                   //      })
-                   //  },
+
                 },
                 {
                     tabBarOptions: {
@@ -90,8 +67,60 @@ const SignUpStack = createStackNavigator(
                 header: null,
 
             }),
-        }
-    },
+        },
+     /*   Detail: {
+            screen: createBottomTabNavigator(
+                {
+                    Info:{
+                        screen: createStackNavigator({
+                            BasicInfo: {screen: BasicInfoScreen},
+                        }),
+                        navigationOptions: ({ }) => ({
+                            tabBarLabel: '基本情報',
+                            tabBarIcon:({tintColor}) => (<Icon name='file-text' type='feather' size={30} color={tintColor}/>)
+                        })
+                    },
+                    Picture:{
+                        screen: createStackNavigator({
+                            Picture: {screen: BasicInfoScreen},
+                        }),
+                        navigationOptions: ({ }) => ({
+                            tabBarLabel: '写真',
+                            tabBarIcon:({tintColor}) => (<Icon name='image' type='feather' size={30} color={tintColor}/>)
+                        })
+                    },
+                    Twitter:{
+                        screen: createStackNavigator({
+                            OriginalTweet: {screen: OriginalTweetScreen},
+                        }),
+                        navigationOptions: ({ }) => ({
+                            tabBarLabel: 'ツイート',
+                            tabBarIcon:({tintColor}) => (<Icon name='twitter' type='feather' size={30} color={tintColor}/>)
+                        })
+                    },
+                },
+                {
+                    tabBarOptions: {
+                        activeTintColor: '#03A9F4',
+                        inactiveTintColor: 'gray',
+                        activeBackgroundColor: '#FFEB3B',
+                        inactiveBackgroundColor: '#FFEB3B',
+                        showIcon: true,
+                        safeAreaInset:{bottom:'never'},
+                        style:{height:80},
+                        //tabStyle:{height:100},
+                        labelStyle:{height:30}
+                        // labelStyle:{justifyContent:'flex-start'},
+                        // tabStyle:{justifyContent:'flex-start'}
+                    }
+                }
+            ),
+            navigationOptions: ({ navigation }) => ({
+                header: null,
+
+            }),
+        },*/
+},
     {
         initialRouteName: 'SignUp',
     },
@@ -103,6 +132,7 @@ const SignUpStack = createStackNavigator(
     //      }
     // }
 );
+
 
 
 

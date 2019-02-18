@@ -21,7 +21,7 @@ export default class Share extends Component {
             isOpen: true,
             type: '',
             value: "aa",
-            uid:'7lsbD8v8w7SbPQcAQkTqMoEwP5P2',
+            uid:'TvoamFgVJuRQdeL2PcQ6L1x06WC2',
 
         }
 
@@ -153,8 +153,8 @@ export default class Share extends Component {
         const userId = uid;
         const unparsedRef = this.getTweetsCollection().doc();
         unparsedRef.set({
-            "post_url":userId,
-            "request_uid":url,
+            "post_url":url,
+            "request_uid":userId,
         });
         this.closing();
         //Alert.alert("successfully seneded", {text: 'OK', onPress: this.closing},);
