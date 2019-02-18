@@ -68,7 +68,7 @@ const SignUpStack = createStackNavigator(
 
             }),
         },
-     /*   Detail: {
+        Detail: {
             screen: createBottomTabNavigator(
                 {
                     Info:{
@@ -118,8 +118,9 @@ const SignUpStack = createStackNavigator(
             navigationOptions: ({ navigation }) => ({
                 header: null,
 
+
             }),
-        },*/
+        },
 },
     {
         initialRouteName: 'SignUp',

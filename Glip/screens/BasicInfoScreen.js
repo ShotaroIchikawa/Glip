@@ -11,7 +11,7 @@ import {
     ListView,
     FlatList,
     Dimensions,
-    Linking,
+    Linking, WebView,
 } from 'react-native';
 import MapView,{PROVIDER_GOOGLE,PROVIDER_DEFAULT,Marker} from 'react-native-maps';
 import {
@@ -33,11 +33,10 @@ const LONGITUDE_DELTA = 0.1000;
 
 export default class BasicInfoScreen extends React.Component {
      static navigationOptions = {
-        headerStyle:{
-            backgroundColor:'#FFEB3B',
-        },
-
-     };
+         //header:null,
+         headerTransparent:true,
+         headerTintColor:'white',
+     }
 
 
     constructor(props){
@@ -47,7 +46,7 @@ export default class BasicInfoScreen extends React.Component {
             shopRef:this.props.navigation.state.params.shop_ref,
 
             imageWidth: 375,
-            imageHeight: 175,
+            imageHeight: 281,
             shopName:"",
             shopMapUrl:"",
             shopSiteUrl:"",
@@ -82,13 +81,13 @@ export default class BasicInfoScreen extends React.Component {
                     {/*rightComponent={{icon: 'notifications-none', type: 'MaterialIcons', color: '#000'}}*/}
                     {/*backgroundColor="#FFEB3B"*/}
                 {/*/>*/}
-                <ScrollView style={styles.container} contentContainerStyle={StyleSheet.absoluteFillObject}>
-                    <View>
+                <ScrollView style={styles.container}>
+                    <View style>
                         <Image
-                            style ={{width:this.state.imageWidth,height:this.state.imageHeight}}
+                            style ={{width:this.state.imageWidth,height:this.state.imageHeight,}}
                             source ={require('./img/sampleimg.jpg')}/>
                     </View>
-                    <View style = {{height:170}}>
+                    <View style = {{marginBottom:10}}>
                         <Text style={styles.shopTitleTextStyle}>{this.state.shopName}</Text>
 
                         <Text style ={styles.shopDetailContainer}>
@@ -112,7 +111,7 @@ export default class BasicInfoScreen extends React.Component {
                     </View>
                     <MapView
                         provider={PROVIDER_GOOGLE}
-                        style={{flex:1,position:'relative'}}
+                        style={{flex:1,position:'relative',height:350}}
                         region={{
                             latitude:this.state.region.latitude,
                             longitude:this.state.region.longitude,
@@ -125,13 +124,16 @@ export default class BasicInfoScreen extends React.Component {
                         //key = {index}
                         coordinate = {{latitude:this.state.region.latitude,longitude:this.state.region.longitude}}
                         title={this.state.shopName}
-                        description={(this.state.shopSiteUrl==="")? null: this.state.shopSiteUrl}
-                        onPress={() => (this.state.shopSiteUrl==="")? null: Linking.openURL(this.state.shopSiteUrl)}
+                        description={(this.state.shopMapUrl==="")? null: this.state.shopMapUrl}
+                        onPress={() => (this.state.shopMapUrl==="")? null: Linking.openURL(this.state.shopMapUrl)}
                         />
 
                     </MapView>
 
-
+                    <WebView
+                        source={{uri:"https://twitter.com/gourmet_kingg/status/1062254525786947584"}}
+                        style ={{flex:1,height:height}}
+                    />
 
 
 

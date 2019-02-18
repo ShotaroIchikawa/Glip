@@ -35,7 +35,7 @@ const SCREEN_HEIGHT = height
 const SCREEN_WIDTH = width
 const ASPECT_RATIO = width / height
 const LATITUDE_DELTA = 0.1000
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
+const LONGITUDE_DELTA = 0.1000
 
 
 export default class ShopMapScreen extends React.Component {
@@ -133,6 +133,10 @@ export default class ShopMapScreen extends React.Component {
         //console.warn(this.state.messages)
     }
 
+    onUserPinGragEnd=(LatLng)=>{
+        this.setState({region:LatLng});
+    }
+
     render() {
         //この変数はあまり使わない
         const interpolations = this.state.markers.map((marker, index) => {
@@ -180,10 +184,30 @@ export default class ShopMapScreen extends React.Component {
                 <MapView
                     ref={map => this.map = map}
                     provider ={PROVIDER_GOOGLE}
-                    initialRegion={this.state.region}
+                    region={this.state.region}
                     style={styles.map}
+                    showsUserLocation={true}
                 >
-
+                    <Marker
+                        draggable
+                        coordinate={{
+                            latitude:this.state.region.latitude,
+                            longitude:this.state.region.longitude,
+                        }}
+                        onDragEnd={e=>{
+                            this.setState({region:{
+                                latitude:e.nativeEvent.coordinate.latitude,
+                                longitude:e.nativeEvent.coordinate.longitude,
+                                latitudeDelta: LATITUDE_DELTA,
+                                longitudeDelta: LONGITUDE_DELTA
+                                }});
+                        }}
+                    >
+                        <Image
+                            source = {require('./img/BlueIcon.svg')}
+                            style = {{width:20,height:20,top:20}}
+                        />
+                    </Marker>
                     {this.state.markers.map((marker, index) => {
                         const scaleStyle = {
                             transform: [
@@ -200,7 +224,13 @@ export default class ShopMapScreen extends React.Component {
                             longitude: marker.geopoint.long,
                         }
                         return (
-                            <Marker.Animated key={index} coordinate={coords}  title={"marker"} description={"description"}/>
+                            <Marker.Animated
+                                key={index}
+                                coordinate={coords}
+                                title={marker.name}
+                               // description={"description"}
+                                onPress={()=>this._carousel.snapToItem(index)}
+                            />
                                /* <Animated.View style={[styles.markerWrap, opacityStyle]}>
                                     <Animated.View style={[styles.ring, scaleStyle]} />
                                     <View style={styles.marker} />
@@ -512,13 +542,14 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         position: "absolute",
-        bottom: 20,
+        bottom: 0,
         left: 0,
         right: 0,
-        paddingVertical: 10,
+        paddingVertical: 0,
     },
     carouselStyle: {
-        padding: 25,
+        padding: 5,
+        paddingBottom:0,
     },
     endPadding: {
         paddingRight: width - CARD_WIDTH,
