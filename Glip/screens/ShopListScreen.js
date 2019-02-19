@@ -104,7 +104,7 @@ export default class ShopListScreen extends React.Component {
                     <TouchableOpacity onPress={()=>
                         this.props.navigation.dispatch(NavigationActions.navigate({routeName:'BasicInfo',params:{shop_ref:l.shop_ref}}))}>
                      <Card
-                         image = {require('./img/sampleimg.jpg')}
+                         image = {{uri:l.photo, resizeMode:'cover'}}
                          imageWrapperStyle ={{margin:10}}
 
                          key={l.name}
@@ -150,7 +150,9 @@ export default class ShopListScreen extends React.Component {
 
                     shopName.push({
                         name:doc.data().name,
-                        shop_ref:ref
+                        shop_ref:ref,
+                        photo:doc.data().photos,
+
 
                     })
                     this.setState({shops:shopName})

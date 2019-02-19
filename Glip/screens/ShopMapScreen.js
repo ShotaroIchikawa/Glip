@@ -300,7 +300,7 @@ export default class ShopMapScreen extends React.Component {
                   <View>
                       <Image
                           style ={{width:200,height:105}}
-                          source ={require('./img/sampleimg.jpg')}/>
+                          source ={{uri:item.photo}}/>
                   </View>
                   <View style={styles.textContent}>
                       <Text style={styles.cardtitle}>{item.name}</Text>
@@ -373,6 +373,7 @@ export default class ShopMapScreen extends React.Component {
                              shopData.push({
                                  name:doc.data().name,
                                  shop_ref:ref,
+                                 photo:doc.data().photos,
                                  geopoint:{
                                      lat:doc.data().geopoint._lat,
                                      long:doc.data().geopoint._long

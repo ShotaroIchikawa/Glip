@@ -50,11 +50,15 @@ export default class BasicInfoScreen extends React.Component {
             shopName:"",
             shopMapUrl:"",
             shopSiteUrl:"",
+            phone:"",
+            address:"",
+            photo:"",
             shopMapGeopoint:{
                 lat:"",
                 long:""
             },
             shopPhoneNumber:"",
+            tweetUrl:"https://twitter.com",
             region: {
                 latitude: 38.261304,
                 longitude: 140.880196,
@@ -85,11 +89,15 @@ export default class BasicInfoScreen extends React.Component {
                     <View style>
                         <Image
                             style ={{width:this.state.imageWidth,height:this.state.imageHeight,}}
-                            source ={require('./img/sampleimg.jpg')}/>
+                            source ={{uri:this.state.photo}}/>
                     </View>
                     <View style = {{marginBottom:10}}>
                         <Text style={styles.shopTitleTextStyle}>{this.state.shopName}</Text>
 
+                        <Text style ={styles.shopDetailContainer}>
+                            <Text style={styles.shopDetailTextStyle}>{(this.state.address==="")? null:" Address: "+this.state.address }
+                            </Text>
+                        </Text>
                         <Text style ={styles.shopDetailContainer}>
                             <Text style={styles.shopDetailTextStyle} > {(this.state.shopMapUrl==="")? null:"MapUrl: "}
                             </Text>
@@ -131,7 +139,7 @@ export default class BasicInfoScreen extends React.Component {
                     </MapView>
 
                     <WebView
-                        source={{uri:"https://twitter.com/gourmet_kingg/status/1062254525786947584"}}
+                        source={{uri:(this.state.tweetUrl==="")?'https://twitter.com':this.state.tweetUrl}}
                         style ={{flex:1,height:height}}
                     />
 
@@ -150,11 +158,16 @@ export default class BasicInfoScreen extends React.Component {
     getShopInfo(shopRef){
 
                 let ref = shopRef
+                let tweetRef =""
+
                 ref.get().then((doc)=>{
 
                     this.setState({
                         shopName:doc.data().name,
                         shopMapUrl:doc.data().map_url,
+                        address:doc.data().address,
+                        phone:doc.data().phone,
+                        photo:doc.data().photos,
                         region:{
                             latitude:doc.data().geopoint._lat,
                             longitude:doc.data().geopoint._long,
@@ -163,9 +176,17 @@ export default class BasicInfoScreen extends React.Component {
                         },
                         shopPhoneNumber:doc.data().phone,
                         shopSiteUrl:doc.data().website_url,
-                    })
 
-                })
+                    });
+                    tweetRef=doc.data().refferred_posts;
+                    tweetRef.get().then((doc)=>{
+                        this.setState({
+                            tweetUrl:doc.data().url,
+                        })
+                    });
+                });
+
+
             }
 
 
